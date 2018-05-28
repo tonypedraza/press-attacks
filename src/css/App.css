@@ -1,0 +1,24 @@
+.App {
+  margin-left: 10px;
+}
+
+.App-header {
+  text-align: left;
+}
+
+.App-title {
+  margin-top: -10px;
+  font-size: 5em;
+  font-weight:700;
+}
+
+.App-subtitle {
+  margin-top: -70px;
+  font-size: 3.33em;
+  color: #747474;
+  font-weight:400;
+}
+
+.App-graphcontainer {
+  display: flex;
+}

@@ -1,0 +1,17 @@
+.CountryList {
+  min-width: 100px;
+  max-width: 300px;
+  width: 66%;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: scroll;
+  margin-top: -50px;
+  margin-left: -20px;
+  font-size: 1.5em;
+}
+
+.CountryList-links {
+  list-style-type: none;
+}

@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
+
+// Components
+import CountryList from './CountryList';
+import CountryGraph from './CountryGraph';
 
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
+
+//Import json
+import locationfrequency from './data/location_frequency.json'
+import pressattacksdata from './data/press_attacks_data.json'
+
 Amplify.configure(aws_exports);
 
-class App extends Component {
+export default class App extends Component {
+  state = {
+    country: ''
+  }
+
+  handleShowCountry = (country) => {
+    this.setState(prevState => ({
+      country: country,
+    }));
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Attacks on Journalists</h1>
+          <h2 className="App-subtitle">from 1992 to 2018</h2>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <div className="App-graphcontainer">
+          <CountryList
+            data={locationfrequency}
+            country={this.state.country}
+            onHandleShowCountry={this.handleShowCountry} />
+          <CountryGraph
+          country={this.state.country}
+          data={pressattacksdata} />
+        </div>
       </div>
     );
   }
 }
-
-export default App;
