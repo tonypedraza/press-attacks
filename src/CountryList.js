@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './css/CountryList.css';
 
 export default class CountryList extends Component {
+
   static defaultProps = {
-    data: [],
+    countriesData: [],
     country: '',
     onHandleShowCountry: {}
   }
@@ -15,11 +16,12 @@ export default class CountryList extends Component {
 
   render() {
     const {
-      data
+      countriesData
     } = this.props
 
+    // Create an array of buttons, one for each country:
     var buttons = [];
-    data.forEach((entry, i) => {
+    countriesData.forEach((entry, i) => {
       var button = <li key={i}>
                       <button value={entry.location}
                               onClick={this.handleShowCountryChange}>
