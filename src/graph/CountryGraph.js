@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as d3 from 'd3'
 
 //Components
+import CountryInfo from './CountryInfo';
 import XAxis from './XAxis';
 import YAxis from './YAxis';
 import Line from './Line';
@@ -39,7 +40,8 @@ export default class CountryGraph extends Component {
 
   render() {
     const {
-      locationFrequencyData
+      locationFrequencyData,
+      country
     } = this.props
 
     // Row that matches the country prop and contains year data
@@ -65,6 +67,7 @@ export default class CountryGraph extends Component {
 
     return (
       <div className="CountryGraph">
+        <CountryInfo country={country} />
         <div id="chart">
           <svg height={height} width={width}>
             <g transform="translate(50,20)">

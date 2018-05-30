@@ -13,6 +13,7 @@ import aws_exports from './aws-exports';
 import locationfrequencydata from './data/location_frequency.json'
 import pressattacksdata from './data/press_attacks_data.json'
 import countriesdata from './data/countries.json'
+import sortedyeardata from './data/attacks_sorted_by_year.json'
 
 Amplify.configure(aws_exports);
 
@@ -48,7 +49,8 @@ export default class App extends Component {
                        onHandleShowCountry={this.handleShowCountry} />
           <CountryGraph country={this.state.country}
                         locationFrequencyData={locationfrequencydata} />
-          <JournalistNames pressAttacks={pressAttacks}/>
+          <JournalistNames pressAttacksYearSorted={sortedyeardata}
+                           country={this.state.country}/>
 
         </div>
       </div>

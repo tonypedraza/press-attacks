@@ -4,41 +4,34 @@ import YearPane from './YearPane';
 export default class JournalistNames extends Component {
 
   static defaultProps = {
-    pressAttacksData: [],
+    pressAttacksYearSorted: [],
     country: ''
   }
 
   render() {
     const {
-      pressAttacks,
+      pressAttacksYearSorted,
       country
     } = this.props
 
-/*
-TODO:
-Should probably make a new json file with the attacks
-sorted by year, so we can iterate the attacks and simply
-make a new YearPane every time the year changes
-
-pseudocode:
-
-var currentYear = 1992
-var results = [<h1>1992</h1>]
-sortedAtttacksByYear.forEach((entry {
-  if (entry.year === currentYear) {
-    results.push(<p>{entry.name}</p>)
-  }
-  else {
-    currentYear = entry.year
-    results.push(<h1>{currentYear}</h1>)
-    results.push(<p>{entry.name}</p>)
-  }
-}))
-
-*/
+    var currentYear = 0
+    var results = []
+    pressAttacksYearSorted.forEach((entry, i) => {
+      if (entry.location === country) {
+        if (entry.year === currentYear) {
+          results.push(<button key={i}>{entry.name}</button>)
+        }
+        else {
+          currentYear = entry.year
+          results.push(<h1>{currentYear}</h1>)
+          results.push(<button key={i}>{entry.name}</button>)
+        }
+      }
+    })
 
     return (
       <div className="test">
+        {results}
       </div>
     )
   }
