@@ -18,9 +18,12 @@ export default class XAxis extends Component {
 
     const xAxis = d3.axisBottom(xScale)
                     .tickFormat(d3.timeFormat("%Y"))
-                    .tickSize(6, 1)
+                    .tickSize(-height)
 
-    d3.select(".xaxis").attr("transform", "translate(0," + height +")").call(xAxis);
+    d3.select(".xaxis")
+      .attr("transform", "translate(0," + (height + 7) +")")
+      .style("stroke-dasharray", "2 2")
+      .call(xAxis);
 
     return(
       <g className="xaxis"></g>

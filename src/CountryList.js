@@ -16,14 +16,17 @@ export default class CountryList extends Component {
 
   render() {
     const {
-      countriesData
+      countriesData,
+      country
     } = this.props
 
     // Create an array of buttons, one for each country:
     var buttons = [];
     countriesData.forEach((entry, i) => {
+      var className = entry.location === country ? 'location-selected' : 'location-button';
       var button = <li key={i}>
-                      <button value={entry.location}
+                      <button className={className}
+                              value={entry.location}
                               onClick={this.handleShowCountryChange}>
                               {entry.location}
                       </button>

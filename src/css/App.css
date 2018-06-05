@@ -1,24 +1,130 @@
-.App {
+.app {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   margin-left: 10px;
 }
 
-.App-header {
-  text-align: left;
-}
-
 .App-title {
-  margin-top: -10px;
+  margin-top: 0;
+  margin-bottom: 0;
   font-size: 5em;
   font-weight:700;
 }
 
 .App-subtitle {
-  margin-top: -70px;
+  margin-top: 0;
+  margin-bottom: 0;
   font-size: 3.33em;
   color: #747474;
   font-weight:400;
 }
 
-.App-container {
+.left-side {
   display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.App-container {
+  margin-top: 15px;
+  display: flex;
+}
+
+/* Graph Container */
+
+.default-text {
+  margin: 18px;
+  font-size: 1.25em;
+  color: #747474;
+  font-weight: 700;
+}
+
+.info-text {
+  margin: 0;
+  font-size: 1.25em;
+  color: #747474;
+  font-weight: 700;
+}
+
+.info-name {
+  font-size: 2.5em;
+  color: #E10000;
+  font-weight: 400;
+  padding-right: 5px;
+}
+
+.CountryList {
+  list-style: none;
+  min-width: 100px;
+  max-width: 200px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: scroll;
+  font-size: 1.5em;
+}
+
+.CountryList-links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.location-button {
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: .75em;
+}
+
+.location-selected {
+  text-align: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: .75em;
+  color: #E10000;
+}
+
+.domain {
+  fill: none;
+  stroke: none;
+}
+
+ /* Journalist Container */
+
+.right-side {
+  display: flex;
+}
+
+.names {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-content: flex-start;
+  align-items: left;
+  overflow: scroll;
+}
+
+
+.names-year {
+  margin: 0;
+  flex-shrink:0;
+  flex-grow: 0;
+  display: inline;
+  font-size: 3.33em;
+}
+
+.name-button {
+  flex-shrink: 0;
+  flex-grow: 1;
+  color: #747474;
+  padding: 3px;
+  border: none;
+  font-size: 1.5em;
 }

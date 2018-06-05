@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import YearPane from './YearPane';
 
 export default class JournalistNames extends Component {
 
@@ -8,6 +7,14 @@ export default class JournalistNames extends Component {
     country: ''
   }
 
+  // TODO: IF NEXT YEAR IS NOT CURRENT YEAR WRAP IN DIV AND RESET
+  // if (pressAttacksYearsSorted[i+1].year !== currentYear) {
+  //   resultDivs.push(<div className="name-section">{result}</div>)
+  //   result = []
+  // }
+
+  //CURRENT WAY IS INCORRECT
+
   render() {
     const {
       pressAttacksYearSorted,
@@ -15,23 +22,32 @@ export default class JournalistNames extends Component {
     } = this.props
 
     var currentYear = 0
-    var results = []
+    var resultDivs = []
+    var result = []
     pressAttacksYearSorted.forEach((entry, i) => {
       if (entry.location === country) {
         if (entry.year === currentYear) {
-          results.push(<button key={i}>{entry.name}</button>)
+          result.push(<button className="name-button" key={i}>{entry.name}</button>)
         }
         else {
+          // Wrap in div
+          if (currentYear !== 0) {
+            resultDivs.push(<div className="name-section">{result}</div>);
+            result = []
+          }
           currentYear = entry.year
-          results.push(<h1>{currentYear}</h1>)
-          results.push(<button key={i}>{entry.name}</button>)
+          result.push(<p className="names-year">{currentYear}</p>)
+          result.push(<button className="name-button" key={i}>{entry.name}</button>)
         }
       }
     })
 
+    //One last wrap for the end cases:
+    resultDivs.push(<div className="name-section">{result}</div>)
+
     return (
-      <div className="test">
-        {results}
+      <div className="names">
+        {resultDivs}
       </div>
     )
   }

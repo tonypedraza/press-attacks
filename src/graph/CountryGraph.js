@@ -25,8 +25,8 @@ export default class CountryGraph extends Component {
     const graph = d3.select("#graph");
     const container = d3.select("#graphic");
     const margin = {top: 20, right: 20, bottom: 30, left: 50};
-    const graphWidth = 600;
-    const graphHeight = 500;
+    const graphWidth = 1000;
+    const graphHeight = 600;
 
 
     this.setState ({
@@ -41,7 +41,8 @@ export default class CountryGraph extends Component {
   render() {
     const {
       locationFrequencyData,
-      country
+      country,
+      numAttacks
     } = this.props
 
     // Row that matches the country prop and contains year data
@@ -64,13 +65,21 @@ export default class CountryGraph extends Component {
     var width = this.state.graphWidth;
     var height = this.state.graphHeight;
     var margin = this.state.margin;
+    var rectHeight = height - margin.top - margin.bottom;
+    var rectWidth = width - margin.left - margin.right;
+
+    var svg = d3.select(".graph");
+    svg.attr("fill", "#F1F1F1");
+    console.log(svg);
 
     return (
       <div className="CountryGraph">
-        <CountryInfo country={country} />
+        <CountryInfo country={country}
+                     numAttacks={numAttacks}/>
         <div id="chart">
-          <svg height={height} width={width}>
-            <g transform="translate(50,20)">
+          <svg className="graph" height={height} width={width}>
+            <g transform="translate(30, 20)">
+              <rect playground height={rectHeight} width={rectWidth}/>
               <XAxis width={width}
                      height={height}
                      margin={margin}/>

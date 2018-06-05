@@ -4,18 +4,26 @@ export default class CountryInfo extends Component {
 
   render() {
     var country = this.props.country
+    var numAttacks = this.props.numAttacks
 
     country.charAt(0).toUpperCase()
+
+    var pluralOrSingular = numAttacks > 1 ? "journalists" : "journalist";
 
     if (country) {
       return (
         <div className="CountryInfo">
-          <p>{country}</p>
+          <p className="info-text"><span className="info-name">{country}</span>
+          has had {numAttacks} {pluralOrSingular} killed since 1992.</p>
         </div>
       )
     }
     else {
-      return null
+      return (
+        <div className="CountryInfo">
+          <p className="default-text">Select any of the countries on the left to see data.</p>
+        </div>
+      )
     }
   }
 }
