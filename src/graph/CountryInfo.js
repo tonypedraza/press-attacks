@@ -21,7 +21,9 @@ export default class CountryInfo extends Component {
     else {
       return (
         <div className="CountryInfo">
-          <p className="default-text">Select any of the countries on the left to see data.</p>
+          <p className="default-text">
+          Select any of the countries on the left to see data.
+          Then select any of the journalists to see their biography.</p>
         </div>
       )
     }

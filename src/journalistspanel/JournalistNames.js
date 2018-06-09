@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import JournalistPane from './JournalistPane'
+import pressattacksdata from '../data/press_attacks_data.json'
+
 export default class JournalistNames extends Component {
 
   static defaultProps = {
@@ -7,18 +10,27 @@ export default class JournalistNames extends Component {
     country: ''
   }
 
-  // TODO: IF NEXT YEAR IS NOT CURRENT YEAR WRAP IN DIV AND RESET
-  // if (pressAttacksYearsSorted[i+1].year !== currentYear) {
-  //   resultDivs.push(<div className="name-section">{result}</div>)
-  //   result = []
-  // }
+  state = {
+    journalist: '',
+  }
 
-  //CURRENT WAY IS INCORRECT
+  handleChangeJournalist = (e) => {
+    var journalist = e.target.value
+    this.setState(prevState => ({
+      journalist: journalist,
+    }));
+    this.props.onHandleOpenPane();
+  }
+
+  handleClosePane = () => {
+    this.props.onHandleClosePane();
+  }
 
   render() {
     const {
       pressAttacksYearSorted,
-      country
+      country,
+      paneIsOpen
     } = this.props
 
     var currentYear = 0
@@ -27,7 +39,12 @@ export default class JournalistNames extends Component {
     pressAttacksYearSorted.forEach((entry, i) => {
       if (entry.location === country) {
         if (entry.year === currentYear) {
-          result.push(<button className="name-button" key={i}>{entry.name}</button>)
+          result.push(<button className="name-button"
+                              key={i}
+                              value={entry.name}
+                              onClick={this.handleChangeJournalist}>
+                              {entry.name}
+                              </button>)
         }
         else {
           // Wrap in div
@@ -37,7 +54,12 @@ export default class JournalistNames extends Component {
           }
           currentYear = entry.year
           result.push(<p className="names-year">{currentYear}</p>)
-          result.push(<button className="name-button" key={i}>{entry.name}</button>)
+          result.push(<button className="name-button"
+                              key={i}
+                              value={entry.name}
+                              onClick={this.handleChangeJournalist}>
+                              {entry.name}
+                              </button>)
         }
       }
     })
@@ -45,10 +67,21 @@ export default class JournalistNames extends Component {
     //One last wrap for the end cases:
     resultDivs.push(<div className="name-section">{result}</div>)
 
-    return (
-      <div className="names">
-        {resultDivs}
-      </div>
-    )
+    if (paneIsOpen) {
+      return (
+        <div className="names">
+          <JournalistPane journalist={this.state.journalist}
+                          journalistData={pressattacksdata}
+                          onHandleClosePane={this.handleClosePane} />
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="names">
+          {resultDivs}
+        </div>
+      )
+    }
   }
 }

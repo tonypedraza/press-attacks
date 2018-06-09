@@ -19,20 +19,36 @@ Amplify.configure(aws_exports);
 
 export default class App extends Component {
   state = {
-    country: ''
+    country: '',
+    journalist: '',
+    paneIsOpen: false
   }
 
   handleShowCountry = (country) => {
     if (country === this.state.country) {
       this.setState(prevState=> ({
         country: '',
+        paneIsOpen: false,
       }))
     }
     else {
       this.setState(prevState => ({
         country: country,
+        paneIsOpen: false,
       }));
     }
+  }
+
+  handleClosePane = () => {
+    this.setState(prevState=> ({
+      paneIsOpen: false,
+    }));
+  }
+
+  handleOpenPane = () => {
+    this.setState(prevState=> ({
+      paneIsOpen: true,
+    }));
   }
 
   render() {
@@ -65,7 +81,11 @@ export default class App extends Component {
         </div>
         <div className="right-side">
           <JournalistNames pressAttacksYearSorted={sortedyeardata}
-                           country={this.state.country}/>
+                           country={this.state.country}
+                           onHandleChangeJournalist={this.handleChangeJournalist}
+                           onHandleClosePane={this.handleClosePane}
+                           onHandleOpenPane={this.handleOpenPane}
+                           paneIsOpen={this.state.paneIsOpen}/>
         </div>
       </div>
     );
