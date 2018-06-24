@@ -14,8 +14,6 @@ export default class Yaxis extends Component {
     //y-axis domain:
     var yDomain = this.props.yDomain
 
-    //number of ticks
-    var numTicks = yDomain[1] > 25 ? 6: yDomain[1];
 
     // D3 Y-axis:
     const yScale = d3.scaleLinear()

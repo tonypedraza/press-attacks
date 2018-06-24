@@ -3,6 +3,7 @@ import './css/App.css';
 
 // Components
 import CountryList from './CountryList';
+import CountryInfo from './graph/CountryInfo'
 import CountryGraph from './graph/CountryGraph';
 import JournalistNames from './journalistspanel/JournalistNames'
 
@@ -21,9 +22,41 @@ export default class App extends Component {
   state = {
     country: '',
     journalist: '',
-    paneIsOpen: false
+    paneIsOpen: false,
+    graphWidth: 0,
+    graphHeight: 0,
   }
 
+  // Lifecycle functions
+  componentWillMount() {
+    window.addEventListener('resize', this.measure, false)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.measure, false)
+  }
+
+  componentDidMount() {
+    this.measure()
+  }
+
+  // componentDidUpdate() {
+  //   this.measure()
+  // }
+
+  // Measures the size of the graph
+  measure = () => {
+    let rect = this.chart.getBoundingClientRect();
+    if (this.state.graphWidth !== rect.width || this.state.graphHeight !== rect.height) {
+      this.setState({
+        graphWidth: rect.width,
+        //offset for the margins and info text
+        graphHeight: rect.height - 55
+      });
+    }
+  }
+
+  // Button functions
   handleShowCountry = (country) => {
     if (country === this.state.country) {
       this.setState(prevState=> ({
@@ -66,17 +99,22 @@ export default class App extends Component {
     return (
       <div className="app">
         <div className="left-side">
-          <header className="App-header">
-            <h1 className="App-title">Attacks on Journalists</h1>
-            <h2 className="App-subtitle">from 1992 to 2018</h2>
+          <header className="header">
+            <h1 className="title">Attacks on Journalists</h1>
+            <h2 className="subtitle">from 1992 to 2018</h2>
           </header>
-          <div className="App-container">
+          <div className="container">
             <CountryList countriesData={countriesdata}
                          country={this.state.country}
                          onHandleShowCountry={this.handleShowCountry} />
-            <CountryGraph country={this.state.country}
-                          locationFrequencyData={locationfrequencydata}
-                          numAttacks={numAttacks} />
+            <div ref={(chart)=>{this.chart=chart}} className="graph-container">
+              <CountryInfo country={this.state.country}
+                           numAttacks={numAttacks}/>
+              <CountryGraph country={this.state.country}
+                            locationFrequencyData={locationfrequencydata}
+                            graphWidth={this.state.graphWidth}
+                            graphHeight={this.state.graphHeight} />
+            </div>
           </div>
         </div>
         <div className="right-side">
