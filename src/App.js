@@ -107,13 +107,15 @@ export default class App extends Component {
             <CountryList countriesData={countriesdata}
                          country={this.state.country}
                          onHandleShowCountry={this.handleShowCountry} />
-            <div ref={(chart)=>{this.chart=chart}} className="graph-container">
+          <div className="graph-info">
               <CountryInfo country={this.state.country}
                            numAttacks={numAttacks}/>
-              <CountryGraph country={this.state.country}
-                            locationFrequencyData={locationfrequencydata}
-                            graphWidth={this.state.graphWidth}
-                            graphHeight={this.state.graphHeight} />
+              <div ref={(chart)=>{this.chart=chart}} className="graph-container">
+                <CountryGraph country={this.state.country}
+                              locationFrequencyData={locationfrequencydata}
+                              graphWidth={this.state.graphWidth}
+                              graphHeight={this.state.graphHeight} />
+              </div>
             </div>
           </div>
         </div>

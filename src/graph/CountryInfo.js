@@ -14,7 +14,7 @@ export default class CountryInfo extends Component {
       return (
         <div className="CountryInfo">
           <p className="info-text"><span className="info-name">{country}</span>
-          has had {numAttacks} {pluralOrSingular} killed since 1992.</p>
+          has {numAttacks} {pluralOrSingular} killed since 1992.</p>
         </div>
       )
     }

@@ -28,11 +28,12 @@ export default class JournalistPane extends Component {
       <div className="journalistPane">
         <button className="closePaneButton"
                 onClick={this.handleClosePane}>
+                Back
         </button>
-        <p><strong>Name:</strong> {result.name}</p>
-        <p><strong>Date:</strong> {result.date}</p>
-        <p><strong>Organization:</strong> {result.organization}</p>
-        <p><strong>City:</strong> {result.specificlocation}</p>
+        <p className="journalist-name">{result.name}</p>
+        <p className="journalist-date">{result.date}</p>
+        <p className="journalist-location">{result.specificlocation}, {result.location}</p>
+        <p className="journalist-organization">{result.organization}</p>
         <p className="description">{result.description}</p>
       </div>
     )
