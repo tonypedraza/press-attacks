@@ -25,6 +25,7 @@ export default class App extends Component {
     paneIsOpen: false,
     graphWidth: 0,
     graphHeight: 0,
+    resetScrollPosition: false,
   }
 
   // Lifecycle functions
@@ -51,7 +52,7 @@ export default class App extends Component {
       this.setState({
         graphWidth: rect.width,
         //offset for the margins and info text
-        graphHeight: rect.height - 55
+        graphHeight: rect.height
       });
     }
   }
@@ -62,12 +63,14 @@ export default class App extends Component {
       this.setState(prevState=> ({
         country: '',
         paneIsOpen: false,
+        resetScrollPosition: true,
       }))
     }
     else {
       this.setState(prevState => ({
         country: country,
         paneIsOpen: false,
+        resetScrollPosition: true,
       }));
     }
   }
@@ -75,6 +78,7 @@ export default class App extends Component {
   handleClosePane = () => {
     this.setState(prevState=> ({
       paneIsOpen: false,
+      resetScrollPosition: false,
     }));
   }
 
@@ -125,7 +129,8 @@ export default class App extends Component {
                            onHandleChangeJournalist={this.handleChangeJournalist}
                            onHandleClosePane={this.handleClosePane}
                            onHandleOpenPane={this.handleOpenPane}
-                           paneIsOpen={this.state.paneIsOpen}/>
+                           paneIsOpen={this.state.paneIsOpen}
+                           resetScrollPosition={this.state.resetScrollPosition}/>
         </div>
       </div>
     );

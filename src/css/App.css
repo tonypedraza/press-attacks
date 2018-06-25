@@ -62,6 +62,21 @@
   font-weight: 700;
 }
 
+
+.default-text a {
+  text-decoration: underline;
+  color: #747474;
+}
+
+.default-text a:visited {
+  text-decoration: none;
+  color: #747474;
+}
+
+.default-text a:hover {
+  color: black;
+}
+
 .info-text {
   max-width: 960px;
   margin: 0;
@@ -137,6 +152,7 @@
 }
 
 .names {
+  padding-right: 15px;
   overflow: scroll;
 }
 
@@ -177,6 +193,10 @@
 }
 
 /* Journalist Pane */
+.journalist-container {
+  overflow: scroll;
+}
+
 .journalistPane {
   min-width: 100px;
   right: none;
@@ -204,7 +224,7 @@
 .journalist-name {
   font-size: 3em;
   text-align: left;
-    font-weight:700;
+  font-weight:700;
 }
 
 .journalist-date {

@@ -12,12 +12,29 @@ export default class JournalistNames extends Component {
 
   state = {
     journalist: '',
+    namesScrollPosition: 0,
+  }
+
+  componentWillReceiveProps() {
+  }
+
+  componentDidUpdate() {
+    if (this.names && this.props.resetScrollPosition) {
+      this.names.scrollTop = 0
+    }
+    else if (this.names) {
+      this.names.scrollTop = this.state.namesScrollPosition
+    }
+    else {
+      this.journalistcontainer.scrollTop = 0
+    }
   }
 
   handleChangeJournalist = (e) => {
     var journalist = e.target.value
     this.setState(prevState => ({
       journalist: journalist,
+      namesScrollPosition: this.names.scrollTop,
     }));
     this.props.onHandleOpenPane();
   }
@@ -67,18 +84,22 @@ export default class JournalistNames extends Component {
     //One last wrap for the end cases:
     resultDivs.push(<div className="name-section">{result}</div>)
 
+    //Most recent year to last
+    resultDivs.reverse()
+
     if (paneIsOpen) {
       return (
-        <div className="names">
-          <JournalistPane journalist={this.state.journalist}
-                          journalistData={pressattacksdata}
-                          onHandleClosePane={this.handleClosePane} />
-        </div>
+          <div ref={(journalistcontainer)=>{this.journalistcontainer=journalistcontainer}}
+               className="journalist-container">
+            <JournalistPane journalist={this.state.journalist}
+                            journalistData={pressattacksdata}
+                            onHandleClosePane={this.handleClosePane} />
+          </div>
       )
     }
     else {
       return (
-        <div className="names">
+        <div ref={(names)=>{this.names=names}} className="names">
           {resultDivs}
         </div>
       )
