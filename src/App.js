@@ -41,10 +41,6 @@ export default class App extends Component {
     this.measure()
   }
 
-  // componentDidUpdate() {
-  //   this.measure()
-  // }
-
   // Measures the size of the graph
   measure = () => {
     let rect = this.chart.getBoundingClientRect();
@@ -100,6 +96,7 @@ export default class App extends Component {
         numAttacks += 1;
       }
     })
+
     return (
       <div className="app">
         <div className="left-side">

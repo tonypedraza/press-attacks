@@ -15,10 +15,8 @@ export default class JournalistNames extends Component {
     namesScrollPosition: 0,
   }
 
-  componentWillReceiveProps() {
-  }
-
   componentDidUpdate() {
+    // Maintain scroll position
     if (this.names && this.props.resetScrollPosition) {
       this.names.scrollTop = 0
     }
@@ -66,11 +64,11 @@ export default class JournalistNames extends Component {
         else {
           // Wrap in div
           if (currentYear !== 0) {
-            resultDivs.push(<div className="name-section">{result}</div>);
+            resultDivs.push(<div className="name-section" key={currentYear}>{result}</div>);
             result = []
           }
           currentYear = entry.year
-          result.push(<p className="names-year">{currentYear}</p>)
+          result.push(<p className="names-year" key={currentYear}>{currentYear}</p>)
           result.push(<button className="name-button"
                               key={i}
                               value={entry.name}
@@ -82,7 +80,7 @@ export default class JournalistNames extends Component {
     })
 
     //One last wrap for the end cases:
-    resultDivs.push(<div className="name-section">{result}</div>)
+    resultDivs.push(<div className="name-section" key={currentYear}>{result}</div>)
 
     //Most recent year to last
     resultDivs.reverse()

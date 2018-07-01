@@ -53,7 +53,9 @@ export default class CountryGraph extends Component {
 
     var margin = this.state.margin;
     var rectHeight = graphHeight - margin.top - margin.bottom;
+    rectHeight = rectHeight < 0 ? 100 : rectHeight
     var rectWidth = graphWidth - margin.left - margin.right;
+    rectWidth = rectWidth < 0 ? 100 : rectWidth
 
     var svg = d3.select(".graph");
     svg.attr("fill", "#F1F1F1");
