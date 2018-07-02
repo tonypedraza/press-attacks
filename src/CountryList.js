@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './css/CountryList.css';
 
 export default class CountryList extends Component {
 

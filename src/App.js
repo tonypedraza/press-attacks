@@ -43,12 +43,13 @@ export default class App extends Component {
 
   // Measures the size of the graph
   measure = () => {
-    let rect = this.chart.getBoundingClientRect();
-    if (this.state.graphWidth !== rect.width || this.state.graphHeight !== rect.height) {
+    let chartRect = this.chart.getBoundingClientRect();
+    let infoRect = this.info.getBoundingClientRect();
+    if (this.state.graphWidth !== chartRect.width || this.state.graphHeight !== (chartRect.height - infoRect.height)) {
       this.setState({
-        graphWidth: rect.width,
+        graphWidth: chartRect.width,
         //offset for the margins and info text
-        graphHeight: rect.height
+        graphHeight: chartRect.height - infoRect.height
       });
     }
   }
@@ -109,8 +110,10 @@ export default class App extends Component {
                          country={this.state.country}
                          onHandleShowCountry={this.handleShowCountry} />
           <div className="graph-info">
-              <CountryInfo country={this.state.country}
-                           numAttacks={numAttacks}/>
+              <div ref={(info)=>{this.info=info}} className="info-container">
+                <CountryInfo country={this.state.country}
+                             numAttacks={numAttacks}/>
+              </div>
               <div ref={(chart)=>{this.chart=chart}} className="graph-container">
                 <CountryGraph country={this.state.country}
                               locationFrequencyData={locationfrequencydata}

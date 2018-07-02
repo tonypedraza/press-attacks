@@ -24,8 +24,8 @@ export default class CountryInfo extends Component {
           <p className="default-text">
           Select any of the countries on the left to see data.
           Then select any of the journalists to see their biography.
-          Data is sourced from the
-          <a target="_blank" rel="noopener noreferrer" href="https://cpj.org/">
+          Data is sourced from the <a target="_blank" rel="noopener noreferrer"
+          href="https://cpj.org/">
           Committee to Protect Journalists</a>.</p>
         </div>
       )

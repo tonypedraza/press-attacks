@@ -48,11 +48,18 @@
 
 /* Graph Container */
 
+.graph-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
 .graph-container {
   min-width: 350px;
   max-width: 2000px;
+  flex-shrink: 1;
   width: 100%;
-  height: 90%;
+  height: 100%;
 }
 
 .default-text {
