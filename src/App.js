@@ -45,12 +45,20 @@ export default class App extends Component {
   measure = () => {
     let chartRect = this.chart.getBoundingClientRect();
     let infoRect = this.info.getBoundingClientRect();
-    if (this.state.graphWidth !== chartRect.width || this.state.graphHeight !== (chartRect.height - infoRect.height)) {
+    if (window.innerWidth > 700) {
+      if (this.state.graphWidth !== chartRect.width || this.state.graphHeight !== (chartRect.height - infoRect.height)) {
+        this.setState({
+          graphWidth: chartRect.width,
+          //offset for the margins and info text
+          graphHeight: chartRect.height - infoRect.height
+        });
+      }
+    }
+    else {
       this.setState({
-        graphWidth: chartRect.width,
-        //offset for the margins and info text
-        graphHeight: chartRect.height - infoRect.height
-      });
+        graphWidth: window.innerWidth - 25,
+        graphHeight: 300
+      })
     }
   }
 

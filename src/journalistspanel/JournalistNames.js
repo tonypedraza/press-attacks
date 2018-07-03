@@ -12,19 +12,23 @@ export default class JournalistNames extends Component {
 
   state = {
     journalist: '',
-    namesScrollPosition: 0,
+    namesScrollPositionTop: 0,
+    namesScrollPositionLeft: 0
   }
 
   componentDidUpdate() {
     // Maintain scroll position
     if (this.names && this.props.resetScrollPosition) {
       this.names.scrollTop = 0
+      this.names.scrollLeft = 0
     }
     else if (this.names) {
-      this.names.scrollTop = this.state.namesScrollPosition
+      this.names.scrollTop = this.state.namesScrollPositionTop
+      this.names.scrollLeft = this.state.namesScrollPositionLeft
     }
     else {
       this.journalistcontainer.scrollTop = 0
+      this.journalistcontainer.scrollLeft = 0
     }
   }
 
@@ -32,7 +36,8 @@ export default class JournalistNames extends Component {
     var journalist = e.target.value
     this.setState(prevState => ({
       journalist: journalist,
-      namesScrollPosition: this.names.scrollTop,
+      namesScrollPositionTop: this.names.scrollTop,
+      namesScrollPositionLeft: this.names.scrollLeft,
     }));
     this.props.onHandleOpenPane();
   }

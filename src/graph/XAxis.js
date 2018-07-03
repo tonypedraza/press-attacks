@@ -16,9 +16,12 @@ export default class XAxis extends Component {
                      .domain([new Date(1992, 0, 1, 0), new Date(2018, 0, 1, 0)])
                      .range([0, width])
 
-    const xAxis = d3.axisBottom(xScale)
+    var xAxis = d3.axisBottom(xScale)
                     .tickFormat(d3.timeFormat("%Y"))
                     .tickSize(-height)
+    if (window.innerWidth < 700) {
+      xAxis = xAxis.ticks(d3.timeYear.every(4))
+    }
 
     d3.select(".xaxis")
       .attr("transform", "translate(0," + (height + 7) +")")
