@@ -2,7 +2,7 @@
 
 https://press-attacks.s3.amazonaws.com/index.html
 
-React App visualizing data scrapped from the Committee to Protect Journalists' website.
+React App visualizing data scraped from the Committee to Protect Journalists' website.
 
 React code is in src.
 
