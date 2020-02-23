@@ -36,7 +36,7 @@ const YAxis: FunctionComponent<YAxisProps> = (props: YAxisProps) => {
 
   d3.select(".yaxis")
     .style("stroke-dasharray", "2 2")
-    .call(yAxis);
+    .call(yAxis as any);
 
   return (
     <div>

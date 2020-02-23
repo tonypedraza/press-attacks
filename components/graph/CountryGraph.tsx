@@ -55,7 +55,7 @@ class CountryGraph extends Component<CountryGraphProps, CountryGraphState> {
     // Row that matches the country prop and contains year data
     // Also finds if maximum number of attacks in a year
     // exceeds five so we can re-render y-axis
-    let locationFrequency: any[] = [];
+    let locationFrequency: [number, number][] = [];
     let maximum_attacks = 0;
     locationFrequencyData.forEach((entry: any) => {
       if (entry.location === country) {

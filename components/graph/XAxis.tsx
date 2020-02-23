@@ -26,7 +26,7 @@ const XAxis: FunctionComponent<XAxisProps> = (props: XAxisProps) => {
 
   var xAxis = d3
     .axisBottom(xScale)
-    .tickFormat(d3.timeFormat("%Y"))
+    .tickFormat(d3.timeFormat("%Y") as any)
     .tickSize(-height);
   if (window.innerWidth < 700) {
     xAxis = xAxis.ticks(d3.timeYear.every(4));
@@ -35,7 +35,7 @@ const XAxis: FunctionComponent<XAxisProps> = (props: XAxisProps) => {
   d3.select(".xaxis")
     .attr("transform", "translate(0," + (height + 7) + ")")
     .style("stroke-dasharray", "2 2")
-    .call(xAxis);
+    .call(xAxis as any);
 
   return (
     <div>

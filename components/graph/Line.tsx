@@ -11,19 +11,19 @@ interface LineProps {
   height: number;
   width: number;
   yDomain: number[];
-  locationFrequency: any[];
+  locationFrequency: [number, number][];
 }
 
 const Line: FunctionComponent<LineProps> = (props: LineProps) => {
   //Sizing settings:
-  var margin = props.margin;
-  var height = props.height - margin.top - margin.bottom;
-  var width = props.width - margin.left - margin.right;
+  const margin = props.margin;
+  const height = props.height - margin.top - margin.bottom;
+  const width = props.width - margin.left - margin.right;
 
   //Array with frequency of attacks in location per year:
-  var locationFrequency = props.locationFrequency;
+  const locationFrequency = props.locationFrequency;
   //y-axis domain:
-  var yDomain = props.yDomain;
+  const yDomain = props.yDomain;
 
   // D3 Line:
   const x = d3.scaleTime().range([0, width]);
@@ -39,16 +39,16 @@ const Line: FunctionComponent<LineProps> = (props: LineProps) => {
       return y(d.Freq);
     });
 
-  locationFrequency.forEach(d => {
+  locationFrequency.forEach(() => {
     x.domain(
       d3.extent(locationFrequency, function(d: any) {
         return d.year;
-      })
+      }) as [any, any]
     );
     y.domain(yDomain);
   });
 
-  var newline = line(locationFrequency);
+  const newline = line(locationFrequency) as string;
 
   return (
     <div>
