@@ -1,4 +1,4 @@
-import React, { Component, FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 
 interface CountryInfoProps {
   country: String;
@@ -12,7 +12,7 @@ const CountryInfo: FunctionComponent<CountryInfoProps> = (
 
   country.charAt(0).toUpperCase();
 
-  var pluralOrSingular = numAttacks > 1 ? "journalists" : "journalist";
+  const pluralOrSingular = numAttacks > 1 ? "journalists" : "journalist";
 
   return country ? (
     <div className="CountryInfo">

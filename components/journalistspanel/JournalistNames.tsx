@@ -1,10 +1,4 @@
-import React, {
-  Component,
-  useRef,
-  useState,
-  FunctionComponent,
-  useEffect
-} from "react";
+import React, { useRef, useState, FunctionComponent, useEffect } from "react";
 
 import JournalistPane from "./JournalistPane";
 import pressattacksdata from "../../data/press_attacks_data.json";
@@ -27,19 +21,22 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   const names = useRef<HTMLDivElement>(null);
   const journalistContainer = useRef<HTMLDivElement>(null);
   const handleScroll = () => {
+    let newScrollTop = 0;
+    let newScrollLeft = 0;
     if (names.current && props.resetScrollPosition) {
-      names.current.scrollTop = 0;
-      names.current.scrollLeft = 0;
+      console.log("here 1");
+      newScrollTop = 0;
+      newScrollLeft = 0;
     } else if (names.current) {
-      names.current.scrollTop = scrollTop;
-      names.current.scrollLeft = scrollLeft;
+      console.log("here 2");
+      newScrollTop = scrollTop;
+      newScrollLeft = scrollLeft;
     } else if (journalistContainer.current) {
+      console.log("here 3");
       journalistContainer.current.scrollTop = 0;
       journalistContainer.current.scrollLeft = 0;
     }
-    names.current &&
-      setScrollTop(names.current.scrollTop) &&
-      setScrollLeft(names.current.scrollLeft);
+    names.current && setScrollTop(newScrollTop) && setScrollLeft(newScrollLeft);
   };
 
   useEffect(() => {
@@ -82,7 +79,6 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
           </button>
         );
       } else {
-        // Wrap in div
         if (currentYear !== 0) {
           resultDivs.push(
             <div className="name-section" key={currentYear}>

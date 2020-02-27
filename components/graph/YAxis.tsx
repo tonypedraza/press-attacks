@@ -1,4 +1,4 @@
-import React, { Component, FunctionComponent } from "react";
+import React, { Fragment, FunctionComponent } from "react";
 import * as d3 from "d3";
 
 interface YAxisProps {
@@ -15,12 +15,12 @@ interface YAxisProps {
 
 const YAxis: FunctionComponent<YAxisProps> = (props: YAxisProps) => {
   //Sizing settings:
-  var margin = props.margin;
-  var height = props.height - margin.top - margin.bottom;
-  var width = props.width - margin.left - margin.right;
+  const margin = props.margin;
+  const height = props.height - margin.top - margin.bottom;
+  const width = props.width - margin.left - margin.right;
 
   //y-axis domain:
-  var yDomain = props.yDomain;
+  const yDomain = props.yDomain;
 
   // D3 Y-axis:
   const yScale = d3
@@ -39,26 +39,9 @@ const YAxis: FunctionComponent<YAxisProps> = (props: YAxisProps) => {
     .call(yAxis as any);
 
   return (
-    <div>
+    <Fragment>
       <g className="yaxis"></g>
-      <style jsx>{`
-        .axis path,
-        .axis line {
-          fill: none;
-          stroke: #000;
-          shape-rendering: crispEdges;
-        }
-        .x.axis path {
-          display: none;
-        }
-
-        .line {
-          fill: none;
-          stroke: #e10000;
-          stroke-width: 2px;
-        }
-      `}</style>
-    </div>
+    </Fragment>
   );
 };
 

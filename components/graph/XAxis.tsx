@@ -1,4 +1,4 @@
-import React, { Component, FunctionComponent } from "react";
+import React, { Fragment, FunctionComponent } from "react";
 import * as d3 from "d3";
 
 interface XAxisProps {
@@ -14,9 +14,9 @@ interface XAxisProps {
 
 const XAxis: FunctionComponent<XAxisProps> = (props: XAxisProps) => {
   // Sizing settings:
-  var margin = props.margin;
-  var height = props.height - margin.top - margin.bottom;
-  var width = props.width - margin.left - margin.right;
+  const margin = props.margin;
+  const height = props.height - margin.top - margin.bottom;
+  const width = props.width - margin.left - margin.right;
 
   // D3 X-axis, fixed from 1992 to 2018
   const xScale = d3
@@ -24,7 +24,7 @@ const XAxis: FunctionComponent<XAxisProps> = (props: XAxisProps) => {
     .domain([new Date(1992, 0, 1, 0), new Date(2018, 0, 1, 0)])
     .range([0, width]);
 
-  var xAxis = d3
+  let xAxis = d3
     .axisBottom(xScale)
     .tickFormat(d3.timeFormat("%Y") as any)
     .tickSize(-height);
@@ -38,26 +38,9 @@ const XAxis: FunctionComponent<XAxisProps> = (props: XAxisProps) => {
     .call(xAxis as any);
 
   return (
-    <div>
+    <Fragment>
       <g className="xaxis"></g>
-      <style jsx>{`
-        .axis path,
-        .axis line {
-          fill: none;
-          stroke: #000;
-          shape-rendering: crispEdges;
-        }
-        .x.axis path {
-          display: none;
-        }
-
-        .line {
-          fill: none;
-          stroke: #e10000;
-          stroke-width: 2px;
-        }
-      `}</style>
-    </div>
+    </Fragment>
   );
 };
 

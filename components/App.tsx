@@ -125,7 +125,7 @@ const App: FunctionComponent = () => {
       <style jsx global>{`
         html,
         body,
-        #root {
+        #__next {
           margin: 0;
           padding: 0;
           height: 100%;

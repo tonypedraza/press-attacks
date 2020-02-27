@@ -1,4 +1,4 @@
-import React, { Component, FunctionComponent } from "react";
+import React, { Fragment, FunctionComponent } from "react";
 import * as d3 from "d3";
 
 interface LineProps {
@@ -51,26 +51,9 @@ const Line: FunctionComponent<LineProps> = (props: LineProps) => {
   const newline = line(locationFrequency) as string;
 
   return (
-    <div>
+    <Fragment>
       <path className="line" d={newline}></path>
-      <style jsx>{`
-        .axis path,
-        .axis line {
-          fill: none;
-          stroke: #000;
-          shape-rendering: crispEdges;
-        }
-        .x.axis path {
-          display: none;
-        }
-
-        .line {
-          fill: none;
-          stroke: #e10000;
-          stroke-width: 2px;
-        }
-      `}</style>
-    </div>
+    </Fragment>
   );
 };
 
