@@ -16,7 +16,6 @@ const App: FunctionComponent = () => {
   const chart = useRef<HTMLDivElement>(null);
   const info = useRef<HTMLDivElement>(null);
   const [country, setCountry] = useState("");
-  const [journalist, setJournalist] = useState("");
   const [paneIsOpen, setPaneIsOpen] = useState(false);
   const [graphWidth, setGraphWidth] = useState(0);
   const [graphHeight, setGraphHeight] = useState(0);
@@ -118,7 +117,6 @@ const App: FunctionComponent = () => {
           country={country}
           onHandleClosePane={handleClosePane}
           onHandleOpenPane={handleOpenPane}
-          paneIsOpen={paneIsOpen}
           resetScrollPosition={resetScroll}
         />
       </div>

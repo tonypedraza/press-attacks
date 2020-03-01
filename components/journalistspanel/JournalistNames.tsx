@@ -8,7 +8,6 @@ interface JournalistNamesProps {
   country: String;
   onHandleClosePane: Function;
   onHandleOpenPane: Function;
-  paneIsOpen: Boolean;
   resetScrollPosition: Boolean;
 }
 
@@ -18,49 +17,37 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   const [journalist, setJournalist] = useState("");
   const [scrollTop, setScrollTop] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [paneIsOpen, setPaneIsOpen] = useState(false);
   const names = useRef<HTMLDivElement>(null);
   const journalistContainer = useRef<HTMLDivElement>(null);
-  const handleScroll = () => {
-    let newScrollTop = 0;
-    let newScrollLeft = 0;
-    if (names.current && props.resetScrollPosition) {
-      console.log("here 1");
-      newScrollTop = 0;
-      newScrollLeft = 0;
-    } else if (names.current) {
-      console.log("here 2");
-      newScrollTop = scrollTop;
-      newScrollLeft = scrollLeft;
+
+  useEffect(() => {
+    if (names && names.current && props.resetScrollPosition) {
+      names.current.scrollTop = 0;
+      names.current.scrollLeft = 0;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (names && names.current) {
+      names.current.scrollTop = scrollTop;
+      names.current.scrollLeft = scrollLeft;
     } else if (journalistContainer.current) {
-      console.log("here 3");
       journalistContainer.current.scrollTop = 0;
       journalistContainer.current.scrollLeft = 0;
     }
-    names.current && setScrollTop(newScrollTop) && setScrollLeft(newScrollLeft);
-  };
+  });
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", () => handleScroll);
-    };
-  }, []);
-
-  const handleChangeJournalist = (name: string) => {
+  const handleChangeJournalist = async (name: string) => {
     setJournalist(name);
-    if (names.current && names.current.scrollTop && names.current.scrollLeft) {
-      setScrollTop(names.current.scrollTop);
-      setScrollLeft(names.current.scrollLeft);
+    if (names.current) {
+      setScrollTop(names.current?.scrollTop);
+      setScrollLeft(names.current?.scrollLeft);
+      setPaneIsOpen(true);
     }
-    props.onHandleOpenPane();
   };
 
-  const handleClosePane = () => {
-    props.onHandleClosePane();
-  };
-
-  const { pressAttacksYearSorted, country, paneIsOpen } = props;
+  const { pressAttacksYearSorted, country } = props;
 
   let currentYear = 0;
   let resultDivs = [];
@@ -73,7 +60,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
             className="name-button"
             key={idx}
             value={entry.name}
-            onClick={() => handleChangeJournalist}
+            onClick={() => handleChangeJournalist(entry.name)}
           >
             {entry.name}
           </button>
@@ -123,7 +110,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
         <JournalistPane
           journalist={journalist}
           journalistData={pressattacksdata}
-          onHandleClosePane={() => handleClosePane()}
+          onHandleClosePane={() => setPaneIsOpen(false)}
         />
       </div>
     );
