@@ -5,17 +5,28 @@
   "dependencies": {
     "aws-amplify": "^0.4.1",
     "aws-amplify-react": "^0.1.47",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "isomorphic-unfetch": "^3.0.0",
+    "next": "^9.2.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
   },
   "devDependencies": {
-    "d3": "^5.4.0"
-  }
+    "@types/d3": "^5.7.2",
+    "@types/node": "^13.7.4",
+    "@types/react": "^16.9.21",
+    "@types/react-dom": "^16.9.5",
+    "d3": "^5.15.0",
+    "typescript": "^3.8.2"
+  },
+  "description": "Visualizing data scraped from the Committee to Protect Journalists' website.",
+  "main": "index.js",
+  "repository": "git@github.com:lspdrz/press-attacks.git",
+  "author": "Luis Pedraza <luispedraza@utexas.edu>",
+  "license": "MIT"
 }
