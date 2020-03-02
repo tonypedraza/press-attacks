@@ -6,7 +6,7 @@ import pressattacksdata from "../../data/press_attacks_data.json";
 interface JournalistNamesProps {
   pressAttacksYearSorted: any;
   country: String;
-  resetScrollPosition: Boolean;
+  resetScroll: Boolean;
 }
 
 const JournalistNames: FunctionComponent<JournalistNamesProps> = (
@@ -20,7 +20,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   const journalistContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (names && names.current && props.resetScrollPosition) {
+    if (names && names.current && props.resetScroll) {
       names.current.scrollTop = 0;
       names.current.scrollLeft = 0;
     }

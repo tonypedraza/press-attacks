@@ -1,16 +1,32 @@
 import React, { useRef, FunctionComponent, useState, useEffect } from "react";
-
-// Components
 import CountryList from "./CountryList";
 import CountryInfo from "./graph/CountryInfo";
 import CountryGraph from "./graph/CountryGraph";
 import JournalistNames from "./journalistspanel/JournalistNames";
 
-//Import json
+// Data used throughout the application
 import locationfrequencydata from "../data/location_frequency.json";
 import pressattacksdata from "../data/press_attacks_data.json";
 import countriesdata from "../data/countries.json";
 import sortedyeardata from "../data/attacks_sorted_by_year.json";
+
+/*
+This is the main parent component of the entire Press Attacks app.
+
+State Variables:
+country: Keeps track of the current country being displayed
+graphWidth: Maintains the width of the graph for responsiveness
+graphHeight: Maintains the height of the graph for responsiveness
+resetScroll: Determines whether the scroll should be reset on the JournalistNames
+div (whenever a new country is selected)
+
+Functions:
+handleResize(): Gets the boundingClientRect of the chart and info divs and calculates
+the correct size of the chart. Runs on both the component mount and when the window
+size is changed
+handleShowCountry(): Attached to the Country buttons and triggers the display of the
+country in the chart and JournalistNames. Or removes the country if selected again.
+*/
 
 const App: FunctionComponent = () => {
   const chart = useRef<HTMLDivElement>(null);
@@ -20,6 +36,7 @@ const App: FunctionComponent = () => {
   const [graphHeight, setGraphHeight] = useState(0);
   const [resetScroll, setResetScroll] = useState(false);
 
+  /* Calculates the size of the d3 chart */
   const handleResize = () => {
     if (chart.current && info.current) {
       let chartRect = chart.current.getBoundingClientRect();
@@ -39,6 +56,8 @@ const App: FunctionComponent = () => {
     }
   };
 
+  /* When the component mounts, add a resize event listener 
+  and call the handleResize function */
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();
@@ -48,7 +67,10 @@ const App: FunctionComponent = () => {
     };
   }, []);
 
-  // Button functions
+  /* When the user selects a new country,
+  if the country is the same, reset country state to empty string
+  else set country state to new country string
+  */
   const handleShowCountry = (newCountry: string) => {
     if (newCountry === country) {
       setCountry("");
@@ -61,8 +83,7 @@ const App: FunctionComponent = () => {
 
   // All of the attacks that happened in the country
   let pressAttacks = [];
-  let numAttacks = 0; // can just be pressAttacks.length ????
-
+  let numAttacks = 0;
   pressattacksdata.forEach((entry, i) => {
     if (entry.location === country) {
       pressAttacks.push(entry);
@@ -102,7 +123,7 @@ const App: FunctionComponent = () => {
         <JournalistNames
           pressAttacksYearSorted={sortedyeardata}
           country={country}
-          resetScrollPosition={resetScroll}
+          resetScroll={resetScroll}
         />
       </div>
       <style jsx global>{`
