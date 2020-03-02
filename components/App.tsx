@@ -16,7 +16,6 @@ const App: FunctionComponent = () => {
   const chart = useRef<HTMLDivElement>(null);
   const info = useRef<HTMLDivElement>(null);
   const [country, setCountry] = useState("");
-  const [paneIsOpen, setPaneIsOpen] = useState(false);
   const [graphWidth, setGraphWidth] = useState(0);
   const [graphHeight, setGraphHeight] = useState(0);
   const [resetScroll, setResetScroll] = useState(false);
@@ -42,6 +41,7 @@ const App: FunctionComponent = () => {
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
+    handleResize();
 
     return () => {
       window.removeEventListener("resize", () => handleResize);
@@ -52,22 +52,11 @@ const App: FunctionComponent = () => {
   const handleShowCountry = (newCountry: string) => {
     if (newCountry === country) {
       setCountry("");
-      setPaneIsOpen(false);
       setResetScroll(true);
     } else {
       setCountry(newCountry);
-      setPaneIsOpen(false);
       setResetScroll(true);
     }
-  };
-
-  const handleClosePane = () => {
-    setPaneIsOpen(false);
-    setResetScroll(false);
-  };
-
-  const handleOpenPane = () => {
-    setPaneIsOpen(true);
   };
 
   // All of the attacks that happened in the country
@@ -81,7 +70,7 @@ const App: FunctionComponent = () => {
     }
   });
 
-  return (
+  return process.browser ? (
     <div className="app">
       <div className="left-side">
         <header className="header">
@@ -99,14 +88,12 @@ const App: FunctionComponent = () => {
               <CountryInfo country={country} numAttacks={numAttacks} />
             </div>
             <div ref={chart} className="graph-container">
-              {process.browser ? (
-                <CountryGraph
-                  country={country}
-                  locationFrequencyData={locationfrequencydata}
-                  graphWidth={graphWidth}
-                  graphHeight={graphHeight}
-                />
-              ) : null}
+              <CountryGraph
+                country={country}
+                locationFrequencyData={locationfrequencydata}
+                graphWidth={graphWidth}
+                graphHeight={graphHeight}
+              />
             </div>
           </div>
         </div>
@@ -115,8 +102,6 @@ const App: FunctionComponent = () => {
         <JournalistNames
           pressAttacksYearSorted={sortedyeardata}
           country={country}
-          onHandleClosePane={handleClosePane}
-          onHandleOpenPane={handleOpenPane}
           resetScrollPosition={resetScroll}
         />
       </div>
@@ -481,7 +466,7 @@ const App: FunctionComponent = () => {
         }
       `}</style>
     </div>
-  );
+  ) : null;
 };
 
 export default App;

@@ -6,8 +6,6 @@ import pressattacksdata from "../../data/press_attacks_data.json";
 interface JournalistNamesProps {
   pressAttacksYearSorted: any;
   country: String;
-  onHandleClosePane: Function;
-  onHandleOpenPane: Function;
   resetScrollPosition: Boolean;
 }
 
