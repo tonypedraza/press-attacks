@@ -6,37 +6,32 @@ interface CountryListProps {
   onHandleShowCountry: Function;
 }
 
+/*
+This is the CountryList component that shows the country buttons on the
+left side of the application
+*/
+
 const CountryList: FunctionComponent<CountryListProps> = (
   props: CountryListProps
 ) => {
-  const handleShowCountryChange = (location: String) => {
-    props.onHandleShowCountry(location);
-  };
-
-  const { countriesData, country } = props;
-
-  // Create an array of buttons, one for each country:
-  let buttons: JSX.Element[] = [];
-  countriesData.forEach((entry: any, i: number) => {
-    let className =
-      entry.location === country ? "location-selected" : "location-button";
-    let button: JSX.Element = (
-      <li key={i}>
-        <button
-          className={className}
-          value={entry.location}
-          onClick={() => handleShowCountryChange(entry.location)}
-        >
-          {entry.location}
-        </button>
-      </li>
-    );
-    buttons.push(button);
-  });
+  const { countriesData, country, onHandleShowCountry } = props;
+  const countryButtons = countriesData.map((entry: any, idx: number) => (
+    <li key={idx}>
+      <button
+        className={
+          entry.location === country ? "location-selected" : "location-button"
+        }
+        value={entry.location}
+        onClick={() => props.onHandleShowCountry(entry.location)}
+      >
+        {entry.location}
+      </button>
+    </li>
+  ));
 
   return (
     <div className="country-list">
-      <ul className="country-list-links">{buttons}</ul>
+      <ul className="country-list-links">{countryButtons}</ul>
       <style jsx global>
         {`
           .country-list {

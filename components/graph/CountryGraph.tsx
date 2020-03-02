@@ -1,7 +1,6 @@
 import React, { FunctionComponent, useState, useEffect } from "react";
 import * as d3 from "d3";
 
-//Components
 import XAxis from "./XAxis";
 import YAxis from "./YAxis";
 import Line from "./Line";
@@ -13,46 +12,22 @@ interface CountryGraphProps {
   graphHeight: number;
 }
 
-interface CountryGraphState {
-  // graph: d3.Selection<d3.BaseType, {}, HTMLElement, any>;
-  graph: any;
-  margin: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  };
-}
+/*
+This is the CountryGraph component that serves at the parent
+for the D3 components (Line, XAxis, and YAxis) as well as the
+CountryInfo component
+*/
 
 const CountryGraph: FunctionComponent<CountryGraphProps> = (
   props: CountryGraphProps
 ) => {
-  const [graph, setGraph]: any = useState(<svg></svg>);
-  const [margin, setMargin] = useState({
+  const { locationFrequencyData, country, graphWidth, graphHeight } = props;
+  const margin = {
     top: 20,
     right: 20,
     bottom: 20,
     left: 50
-  });
-
-  useEffect(() => {
-    const graph = d3.select("#graph");
-    setGraph(graph);
-
-    return () => {};
-  }, []);
-
-  // componentDidMount() {
-  //   const graph = d3.select("#graph");
-  //   const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-
-  //   this.setState({
-  //     graph: graph,
-  //     margin: margin
-  //   });
-  // }
-
-  const { locationFrequencyData, country, graphWidth, graphHeight } = props;
+  };
 
   // Row that matches the country prop and contains year data
   // Also finds if maximum number of attacks in a year

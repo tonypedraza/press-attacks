@@ -5,6 +5,11 @@ interface CountryInfoProps {
   numAttacks: number;
 }
 
+/*
+This is the CountryInfo component that displays some information
+about the selected country above the D3 graph.
+*/
+
 const CountryInfo: FunctionComponent<CountryInfoProps> = (
   props: CountryInfoProps
 ) => {

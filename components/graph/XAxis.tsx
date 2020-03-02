@@ -12,6 +12,11 @@ interface XAxisProps {
   width: number;
 }
 
+/*
+This is the XAxis component that renders the x axis used in the
+D3 graph.
+*/
+
 const XAxis: FunctionComponent<XAxisProps> = (props: XAxisProps) => {
   // Sizing settings:
   const margin = props.margin;

@@ -14,6 +14,11 @@ interface LineProps {
   locationFrequency: [number, number][];
 }
 
+/*
+This is the Line component that renders the line used in the
+D3 graph.
+*/
+
 const Line: FunctionComponent<LineProps> = (props: LineProps) => {
   //Sizing settings:
   const margin = props.margin;

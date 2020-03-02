@@ -9,6 +9,30 @@ interface JournalistNamesProps {
   resetScroll: Boolean;
 }
 
+/*
+This is the JournalistNames component that displays the names
+of journalists on the right side of the application when a country
+is selected. It also acts as the parent to the JournalistPane component.
+
+State Variables:
+- journalist: Keeps track of the current journalist selected
+- scrollTop: Keeps track of the top scroll position in the names div
+- scrollLeft: Keeps track of the left scroll position in the names div
+- paneIsOpen: Keeps track of whether the JournalistPane is open
+or not (i.e. a journalist name is selected)
+
+Refs:
+- names: the names div
+- journalistContainer: the journalist-container div
+
+Functions:
+- handleChangeJournalist(name): Sets the journalist state variable to the
+passed in name. Then sets the scrollTop and scrollLeft states before setting
+the paneIsOpen state to true, which will open the JournalistPane.
+- getJournalistButtonDivs(): Loops through pressAttacksYearSorted data and generates
+the divs used in the name-section.
+*/
+
 const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   props: JournalistNamesProps
 ) => {
@@ -19,13 +43,18 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   const names = useRef<HTMLDivElement>(null);
   const journalistContainer = useRef<HTMLDivElement>(null);
 
+  /* When the component mounts, reset the scroll to 0 
+  if the resetScroll prop is true */
   useEffect(() => {
     if (names && names.current && props.resetScroll) {
       names.current.scrollTop = 0;
       names.current.scrollLeft = 0;
     }
-  }, []);
+  });
 
+  /* When the component updates, readjust the scroll to
+  the previous names div position or set to 0 for the journalistContainer
+  div */
   useEffect(() => {
     if (names && names.current) {
       names.current.scrollTop = scrollTop;
@@ -36,49 +65,40 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     }
   });
 
-  const handleChangeJournalist = async (name: string) => {
+  const handleChangeJournalist = (name: string) => {
     setJournalist(name);
     if (names.current) {
-      setScrollTop(names.current?.scrollTop);
-      setScrollLeft(names.current?.scrollLeft);
+      setScrollTop(names.current.scrollTop);
+      setScrollLeft(names.current.scrollLeft);
       setPaneIsOpen(true);
     }
   };
 
   const { pressAttacksYearSorted, country } = props;
 
-  let currentYear = 0;
-  let resultDivs = [];
-  let result: any[] = [];
-  pressAttacksYearSorted.forEach((entry: any, idx: number) => {
-    if (entry.location === country) {
-      if (entry.year === currentYear) {
-        result.push(
-          <button
-            className="name-button"
-            key={idx}
-            value={entry.name}
-            onClick={() => handleChangeJournalist(entry.name)}
-          >
-            {entry.name}
-          </button>
-        );
-      } else {
-        if (currentYear !== 0) {
-          resultDivs.push(
-            <div className="name-section" key={currentYear}>
-              {result}
-            </div>
+  const getJournalistButtonDivs = () => {
+    let currentYear = 0;
+    let journalistButtonDivs = [];
+    let journalistButtons: any[] = [];
+    pressAttacksYearSorted.forEach((entry: any, idx: number) => {
+      if (entry.location === country) {
+        if (entry.year !== currentYear) {
+          if (currentYear !== 0) {
+            journalistButtonDivs.push(
+              <div className="name-section" key={currentYear}>
+                {journalistButtons}
+              </div>
+            );
+            journalistButtons = [];
+          }
+          currentYear = entry.year;
+          journalistButtons.push(
+            <p className="names-year" key={currentYear}>
+              {currentYear}
+            </p>
           );
-          result = [];
         }
-        currentYear = entry.year;
-        result.push(
-          <p className="names-year" key={currentYear}>
-            {currentYear}
-          </p>
-        );
-        result.push(
+        journalistButtons.push(
           <button
             className="name-button"
             key={idx}
@@ -89,18 +109,20 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
           </button>
         );
       }
-    }
-  });
+    });
 
-  //One last wrap for the end cases:
-  resultDivs.push(
-    <div className="name-section" key={currentYear}>
-      {result}
-    </div>
-  );
+    //One last wrap for the end cases:
+    journalistButtonDivs.push(
+      <div className="name-section" key={currentYear}>
+        {journalistButtons}
+      </div>
+    );
 
-  //Most recent year to last
-  resultDivs.reverse();
+    //Most recent year to last
+    journalistButtonDivs.reverse();
+
+    return journalistButtonDivs;
+  };
 
   if (paneIsOpen) {
     return (
@@ -115,7 +137,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   } else {
     return (
       <div ref={names} className="names">
-        {resultDivs}
+        {getJournalistButtonDivs()}
         <style jsx global>
           {`
             .names {

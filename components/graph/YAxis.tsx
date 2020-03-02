@@ -13,6 +13,11 @@ interface YAxisProps {
   yDomain: number[];
 }
 
+/*
+This is the YAxis component that renders the y axis used in the
+D3 graph.
+*/
+
 const YAxis: FunctionComponent<YAxisProps> = (props: YAxisProps) => {
   //Sizing settings:
   const margin = props.margin;

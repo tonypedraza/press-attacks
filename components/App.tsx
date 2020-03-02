@@ -14,17 +14,17 @@ import sortedyeardata from "../data/attacks_sorted_by_year.json";
 This is the main parent component of the entire Press Attacks app.
 
 State Variables:
-country: Keeps track of the current country being displayed
-graphWidth: Maintains the width of the graph for responsiveness
-graphHeight: Maintains the height of the graph for responsiveness
-resetScroll: Determines whether the scroll should be reset on the JournalistNames
+- country: Keeps track of the current country being displayed
+- graphWidth: Maintains the width of the graph for responsiveness
+- graphHeight: Maintains the height of the graph for responsiveness
+- resetScroll: Determines whether the scroll should be reset on the JournalistNames
 div (whenever a new country is selected)
 
 Functions:
-handleResize(): Gets the boundingClientRect of the chart and info divs and calculates
+- handleResize(): Gets the boundingClientRect of the chart and info divs and calculates
 the correct size of the chart. Runs on both the component mount and when the window
 size is changed
-handleShowCountry(): Attached to the Country buttons and triggers the display of the
+- handleShowCountry(): Attached to the Country buttons and triggers the display of the
 country in the chart and JournalistNames. Or removes the country if selected again.
 */
 
