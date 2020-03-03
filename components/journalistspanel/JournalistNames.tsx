@@ -1,9 +1,9 @@
 import React, {
   useRef,
-  useState,
   FunctionComponent,
   useEffect,
-  useContext
+  useContext,
+  useMemo
 } from "react";
 
 import { AppContext } from "../appContext";
@@ -69,15 +69,15 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
 
   const { pressAttacksYearSorted, country } = props;
 
-  const getJournalistButtonDivs = () => {
+  const journalistButtonDivs = useMemo(() => {
     let currentYear = 0;
-    let journalistButtonDivs = [];
+    let result = [];
     let journalistButtons: any[] = [];
     pressAttacksYearSorted.forEach((entry: any, idx: number) => {
       if (entry.location === country) {
         if (entry.year !== currentYear) {
           if (currentYear !== 0) {
-            journalistButtonDivs.push(
+            result.push(
               <div className="name-section" key={currentYear}>
                 {journalistButtons}
               </div>
@@ -105,17 +105,17 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     });
 
     //One last wrap for the end cases:
-    journalistButtonDivs.push(
+    result.push(
       <div className="name-section" key={currentYear}>
         {journalistButtons}
       </div>
     );
 
     //Most recent year to last
-    journalistButtonDivs.reverse();
+    result.reverse();
 
-    return journalistButtonDivs;
-  };
+    return result;
+  }, [country]);
 
   return journalist !== "" ? (
     <div ref={journalistContainer} className="journalist-container">
@@ -127,7 +127,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     </div>
   ) : (
     <div ref={names} className="names">
-      {getJournalistButtonDivs()}
+      {journalistButtonDivs}
       <style jsx global>
         {`
           .names {
