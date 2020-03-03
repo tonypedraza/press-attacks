@@ -22,7 +22,7 @@ const CountryList: FunctionComponent<CountryListProps> = (
           entry.location === country ? "location-selected" : "location-button"
         }
         value={entry.location}
-        onClick={() => props.onHandleShowCountry(entry.location)}
+        onClick={() => onHandleShowCountry(entry.location)}
       >
         {entry.location}
       </button>
