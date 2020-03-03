@@ -1,25 +1,24 @@
-import React, { useRef, useState, FunctionComponent, useEffect } from "react";
+import React, {
+  useRef,
+  useState,
+  FunctionComponent,
+  useEffect,
+  useContext
+} from "react";
 
+import { AppContext } from "../appContext";
 import JournalistPane from "./JournalistPane";
 import pressattacksdata from "../../data/press_attacks_data.json";
 
 interface JournalistNamesProps {
   pressAttacksYearSorted: any;
   country: String;
-  resetScroll: Boolean;
 }
 
 /*
 This is the JournalistNames component that displays the names
 of journalists on the right side of the application when a country
 is selected. It also acts as the parent to the JournalistPane component.
-
-State Variables:
-- journalist: Keeps track of the current journalist selected
-- scrollTop: Keeps track of the top scroll position in the names div
-- scrollLeft: Keeps track of the left scroll position in the names div
-- paneIsOpen: Keeps track of whether the JournalistPane is open
-or not (i.e. a journalist name is selected)
 
 Refs:
 - names: the names div
@@ -28,7 +27,6 @@ Refs:
 Functions:
 - handleChangeJournalist(name): Sets the journalist state variable to the
 passed in name. Then sets the scrollTop and scrollLeft states before setting
-the paneIsOpen state to true, which will open the JournalistPane.
 - getJournalistButtonDivs(): Loops through pressAttacksYearSorted data and generates
 the divs used in the name-section.
 */
@@ -36,21 +34,11 @@ the divs used in the name-section.
 const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   props: JournalistNamesProps
 ) => {
-  const [journalist, setJournalist] = useState("");
-  const [scrollTop, setScrollTop] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [paneIsOpen, setPaneIsOpen] = useState(false);
+  const { journalist, dispatchJournalist } = useContext(AppContext);
+  const { scrollTop, dispatchScrollTop } = useContext(AppContext);
+  const { scrollLeft, dispatchScrollLeft } = useContext(AppContext);
   const names = useRef<HTMLDivElement>(null);
   const journalistContainer = useRef<HTMLDivElement>(null);
-
-  /* When the component mounts, reset the scroll to 0 
-  if the resetScroll prop is true */
-  useEffect(() => {
-    if (names && names.current && props.resetScroll) {
-      names.current.scrollTop = 0;
-      names.current.scrollLeft = 0;
-    }
-  });
 
   /* When the component updates, readjust the scroll to
   the previous names div position or set to 0 for the journalistContainer
@@ -66,11 +54,16 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   });
 
   const handleChangeJournalist = (name: string) => {
-    setJournalist(name);
+    dispatchJournalist({ type: "SELECT", name: name });
     if (names.current) {
-      setScrollTop(names.current.scrollTop);
-      setScrollLeft(names.current.scrollLeft);
-      setPaneIsOpen(true);
+      dispatchScrollTop({
+        type: "SELECTED_JOURNALIST",
+        scrollValue: names.current.scrollTop
+      });
+      dispatchScrollLeft({
+        type: "SELECTED_JOURNALIST",
+        scrollValue: names.current.scrollTop
+      });
     }
   };
 
@@ -124,75 +117,71 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     return journalistButtonDivs;
   };
 
-  if (paneIsOpen) {
-    return (
-      <div ref={journalistContainer} className="journalist-container">
-        <JournalistPane
-          journalist={journalist}
-          journalistData={pressattacksdata}
-          onHandleClosePane={() => setPaneIsOpen(false)}
-        />
-      </div>
-    );
-  } else {
-    return (
-      <div ref={names} className="names">
-        {getJournalistButtonDivs()}
-        <style jsx global>
-          {`
+  return journalist !== "" ? (
+    <div ref={journalistContainer} className="journalist-container">
+      <JournalistPane
+        journalist={journalist}
+        journalistData={pressattacksdata}
+        onHandleClosePane={() => dispatchJournalist({ type: "DESELECT" })}
+      />
+    </div>
+  ) : (
+    <div ref={names} className="names">
+      {getJournalistButtonDivs()}
+      <style jsx global>
+        {`
+          .names {
+            padding-right: 15px;
+            overflow: scroll;
+          }
+
+          .names-year {
+            margin: 0;
+            flex-shrink: 0;
+            flex-grow: 0;
+            display: inline;
+            font-size: 3.33em;
+          }
+
+          .name-button {
+            background-color: #ffffff;
+            display: flex;
+            align-items: left;
+            text-align: left;
+            justify: left;
+            color: #747474;
+            padding: 3px;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            font-size: 1.5em;
+          }
+
+          .name-button:hover {
+            color: #e10000;
+          }
+
+          .journalist-container {
+            overflow: scroll;
+          }
+
+          @media (max-width: 700px) {
             .names {
-              padding-right: 15px;
-              overflow: scroll;
-            }
-
-            .names-year {
-              margin: 0;
-              flex-shrink: 0;
-              flex-grow: 0;
-              display: inline;
-              font-size: 3.33em;
-            }
-
-            .name-button {
-              background-color: #ffffff;
               display: flex;
-              align-items: left;
-              text-align: left;
-              justify: left;
-              color: #747474;
-              padding: 3px;
-              border: none;
-              outline: none;
-              cursor: pointer;
-              font-size: 1.5em;
+              flex-direction: row;
+              align-items: baseline;
+              height: 100%;
             }
-
-            .name-button:hover {
-              color: #e10000;
+            .name-section {
+              display: flex;
+              flex-direction: row;
+              align-items: baseline;
             }
-
-            .journalist-container {
-              overflow: scroll;
-            }
-
-            @media (max-width: 700px) {
-              .names {
-                display: flex;
-                flex-direction: row;
-                align-items: baseline;
-                height: 100%;
-              }
-              .name-section {
-                display: flex;
-                flex-direction: row;
-                align-items: baseline;
-              }
-            }
-          `}
-        </style>
-      </div>
-    );
-  }
+          }
+        `}
+      </style>
+    </div>
+  );
 };
 
 export default JournalistNames;

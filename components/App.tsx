@@ -1,4 +1,12 @@
-import React, { useRef, FunctionComponent, useState, useEffect } from "react";
+import React, {
+  useRef,
+  FunctionComponent,
+  useState,
+  useEffect,
+  useReducer
+} from "react";
+
+import { AppContext } from "./appContext";
 import CountryList from "./CountryList";
 import CountryInfo from "./graph/CountryInfo";
 import CountryGraph from "./graph/CountryGraph";
@@ -17,8 +25,6 @@ State Variables:
 - country: Keeps track of the current country being displayed
 - graphWidth: Maintains the width of the graph for responsiveness
 - graphHeight: Maintains the height of the graph for responsiveness
-- resetScroll: Determines whether the scroll should be reset on the JournalistNames
-div (whenever a new country is selected)
 
 Functions:
 - handleResize(): Gets the boundingClientRect of the chart and info divs and calculates
@@ -34,7 +40,25 @@ const App: FunctionComponent = () => {
   const [country, setCountry] = useState("");
   const [graphWidth, setGraphWidth] = useState(0);
   const [graphHeight, setGraphHeight] = useState(0);
-  const [resetScroll, setResetScroll] = useState(false);
+  const scrollReducer = (state: any, action: any) => {
+    switch (action.type) {
+      case "SELECTED_COUNTRY":
+        return 0;
+      case "SELECTED_JOURNALIST":
+        return action.scrollValue;
+    }
+  };
+  const journalistReducer = (state: any, action: any) => {
+    switch (action.type) {
+      case "SELECT":
+        return action.name;
+      case "DESELECT":
+        return "";
+    }
+  };
+  const [scrollTop, dispatchScrollTop] = useReducer(scrollReducer, 0);
+  const [scrollLeft, dispatchScrollLeft] = useReducer(scrollReducer, 0);
+  const [journalist, dispatchJournalist] = useReducer(journalistReducer, 0);
 
   /* Calculates the size of the d3 chart */
   const handleResize = () => {
@@ -74,11 +98,12 @@ const App: FunctionComponent = () => {
   const handleShowCountry = (newCountry: string) => {
     if (newCountry === country) {
       setCountry("");
-      setResetScroll(true);
     } else {
       setCountry(newCountry);
-      setResetScroll(true);
     }
+    dispatchScrollTop({ type: "SELECTED_COUNTRY" });
+    dispatchScrollLeft({ type: "SELECTED_COUNTRY" });
+    dispatchJournalist({ type: "DESELECT" });
   };
 
   // All of the attacks that happened in the country
@@ -91,175 +116,189 @@ const App: FunctionComponent = () => {
     }
   });
 
-  return process.browser ? (
-    <div className="app">
-      <div className="left-side">
-        <header className="header">
-          <h1 className="title">Attacks on Journalists</h1>
-          <h2 className="subtitle">from 1992 to 2018</h2>
-        </header>
-        <div className="container">
-          <CountryList
-            countriesData={countriesdata}
-            country={country}
-            onHandleShowCountry={handleShowCountry}
-          />
-          <div className="graph-info">
-            <div ref={info} className="info-container">
-              <CountryInfo country={country} numAttacks={numAttacks} />
-            </div>
-            <div ref={chart} className="graph-container">
-              <CountryGraph
+  return (
+    <AppContext.Provider
+      value={{
+        scrollTop,
+        dispatchScrollTop,
+        scrollLeft,
+        dispatchScrollLeft,
+        journalist,
+        dispatchJournalist
+      }}
+    >
+      {" "}
+      {process.browser ? (
+        <div className="app">
+          <div className="left-side">
+            <header className="header">
+              <h1 className="title">Attacks on Journalists</h1>
+              <h2 className="subtitle">from 1992 to 2018</h2>
+            </header>
+            <div className="container">
+              <CountryList
+                countriesData={countriesdata}
                 country={country}
-                locationFrequencyData={locationfrequencydata}
-                graphWidth={graphWidth}
-                graphHeight={graphHeight}
+                onHandleShowCountry={handleShowCountry}
               />
+              <div className="graph-info">
+                <div ref={info} className="info-container">
+                  <CountryInfo country={country} numAttacks={numAttacks} />
+                </div>
+                <div ref={chart} className="graph-container">
+                  <CountryGraph
+                    country={country}
+                    locationFrequencyData={locationfrequencydata}
+                    graphWidth={graphWidth}
+                    graphHeight={graphHeight}
+                  />
+                </div>
+              </div>
             </div>
           </div>
+          <div className="right-side">
+            <JournalistNames
+              pressAttacksYearSorted={sortedyeardata}
+              country={country}
+            />
+          </div>
+          <style jsx global>{`
+            html,
+            body,
+            #__next {
+              margin: 0;
+              padding: 0;
+              height: 100%;
+              width: 100%;
+              font-family: "Roboto", sans-serif;
+            }
+
+            .app {
+              height: 100%;
+              display: flex;
+              justify-content: space-between;
+              flex-direction: row;
+              flex-wrap: nowrap;
+              justify-content: space-between;
+              margin-left: 10px;
+              margin-right: 10px;
+            }
+
+            .title {
+              margin-top: 0;
+              margin-bottom: 0;
+              font-size: 5em;
+              font-weight: 700;
+              height: 50%;
+            }
+
+            .subtitle {
+              margin-top: 0;
+              margin-bottom: 0;
+              font-size: 3.33em;
+              color: #747474;
+              font-weight: 400;
+            }
+
+            .container {
+              margin-top: 15px;
+              display: flex;
+              height: 78%;
+            }
+
+            .left-side {
+              width: 80%;
+              min-width: 120px;
+              max-width: 100%;
+              display: flex;
+              flex-direction: column;
+              height: 100%;
+              display: flex;
+            }
+
+            .right-side {
+              min-width: 100px;
+              width: 20%;
+              margin-right: 20px;
+              display: flex;
+            }
+
+            /* Graph Container */
+
+            .graph-info {
+              width: 80%;
+              display: flex;
+              flex-direction: column;
+              justify-content: flex-start;
+            }
+
+            .graph-container {
+              min-width: 350px;
+              max-width: 2000px;
+              flex-shrink: 1;
+              width: 100%;
+              height: 100%;
+            }
+
+            .domain {
+              fill: none;
+              stroke: none;
+            }
+
+            @media (max-width: 700px) {
+              .app {
+                height: auto;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+
+              .left-side {
+                width: 100%;
+                height: 70%;
+              }
+
+              .right-side {
+                width: 100%;
+                height: 30%;
+              }
+
+              .title {
+                font-size: 3em;
+              }
+              .subtitle {
+                font-size: 2em;
+              }
+
+              .container {
+                flex-direction: column;
+              }
+
+              .graph-info {
+                width: 100%;
+              }
+            }
+
+            .axis path,
+            .axis line {
+              fill: none;
+              stroke: #000;
+              shape-rendering: crispEdges;
+            }
+            .x.axis path {
+              display: none;
+            }
+
+            .line {
+              fill: none;
+              stroke: #e10000;
+              stroke-width: 2px;
+            }
+          `}</style>
         </div>
-      </div>
-      <div className="right-side">
-        <JournalistNames
-          pressAttacksYearSorted={sortedyeardata}
-          country={country}
-          resetScroll={resetScroll}
-        />
-      </div>
-      <style jsx global>{`
-        html,
-        body,
-        #__next {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          width: 100%;
-          font-family: "Roboto", sans-serif;
-        }
-
-        .app {
-          height: 100%;
-          display: flex;
-          justify-content: space-between;
-          flex-direction: row;
-          flex-wrap: nowrap;
-          justify-content: space-between;
-          margin-left: 10px;
-          margin-right: 10px;
-        }
-
-        .title {
-          margin-top: 0;
-          margin-bottom: 0;
-          font-size: 5em;
-          font-weight: 700;
-          height: 50%;
-        }
-
-        .subtitle {
-          margin-top: 0;
-          margin-bottom: 0;
-          font-size: 3.33em;
-          color: #747474;
-          font-weight: 400;
-        }
-
-        .container {
-          margin-top: 15px;
-          display: flex;
-          height: 78%;
-        }
-
-        .left-side {
-          width: 80%;
-          min-width: 120px;
-          max-width: 100%;
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          display: flex;
-        }
-
-        .right-side {
-          min-width: 100px;
-          width: 20%;
-          margin-right: 20px;
-          display: flex;
-        }
-
-        /* Graph Container */
-
-        .graph-info {
-          width: 80%;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-        }
-
-        .graph-container {
-          min-width: 350px;
-          max-width: 2000px;
-          flex-shrink: 1;
-          width: 100%;
-          height: 100%;
-        }
-
-        .domain {
-          fill: none;
-          stroke: none;
-        }
-
-        @media (max-width: 700px) {
-          .app {
-            height: auto;
-            flex-direction: column;
-            justify-content: flex-start;
-          }
-
-          .left-side {
-            width: 100%;
-            height: 70%;
-          }
-
-          .right-side {
-            width: 100%;
-            height: 30%;
-          }
-
-          .title {
-            font-size: 3em;
-          }
-          .subtitle {
-            font-size: 2em;
-          }
-
-          .container {
-            flex-direction: column;
-          }
-
-          .graph-info {
-            width: 100%;
-          }
-        }
-
-        .axis path,
-        .axis line {
-          fill: none;
-          stroke: #000;
-          shape-rendering: crispEdges;
-        }
-        .x.axis path {
-          display: none;
-        }
-
-        .line {
-          fill: none;
-          stroke: #e10000;
-          stroke-width: 2px;
-        }
-      `}</style>
-    </div>
-  ) : null;
+      ) : null}
+      ;
+    </AppContext.Provider>
+  );
 };
 
 export default App;
