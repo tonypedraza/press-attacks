@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import * as d3 from "d3";
 
 import XAxis from "./XAxis";
@@ -6,7 +6,7 @@ import YAxis from "./YAxis";
 import Line from "./Line";
 
 interface CountryGraphProps {
-  country: String;
+  country: string;
   locationFrequencyData: any;
   graphWidth: number;
   graphHeight: number;

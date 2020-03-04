@@ -40,19 +40,25 @@ const App: FunctionComponent = () => {
   const [country, setCountry] = useState("");
   const [graphWidth, setGraphWidth] = useState(0);
   const [graphHeight, setGraphHeight] = useState(0);
-  const scrollReducer = (state: any, action: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const scrollReducer = (_state: any, action: any) => {
     switch (action.type) {
       case "SELECTED_COUNTRY":
         return 0;
       case "SELECTED_JOURNALIST":
         return action.scrollValue;
+      default:
+        return 0;
     }
   };
-  const journalistReducer = (state: any, action: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const journalistReducer = (_state: any, action: any) => {
     switch (action.type) {
       case "SELECT":
         return action.name;
       case "DESELECT":
+        return "";
+      default:
         return "";
     }
   };
@@ -89,7 +95,7 @@ const App: FunctionComponent = () => {
     return () => {
       window.removeEventListener("resize", () => handleResize);
     };
-  }, []);
+  }, [handleResize]);
 
   /* When the user selects a new country,
   if the country is the same, reset country state to empty string
@@ -109,7 +115,7 @@ const App: FunctionComponent = () => {
   // All of the attacks that happened in the country
   let pressAttacks = [];
   let numAttacks = 0;
-  pressattacksdata.forEach((entry, i) => {
+  pressattacksdata.forEach(entry => {
     if (entry.location === country) {
       pressAttacks.push(entry);
       numAttacks += 1;

@@ -12,7 +12,7 @@ import pressattacksdata from "../../data/press_attacks_data.json";
 
 interface JournalistNamesProps {
   pressAttacksYearSorted: any;
-  country: String;
+  country: string;
 }
 
 /*
@@ -115,7 +115,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     result.reverse();
 
     return result;
-  }, [country]);
+  }, [country, handleChangeJournalist, pressAttacksYearSorted]);
 
   return journalist !== "" ? (
     <div ref={journalistContainer} className="journalist-container">
