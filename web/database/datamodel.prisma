@@ -5,3 +5,36 @@ type User {
   email: String
   avatarUrl: String
 }
+
+type Country {
+  id: ID! @id
+  name: String!
+  journalistsKilled: [Journalist!]!
+}
+
+type Journalist {
+  id: ID! @id
+  href: String
+  cpjId: Int @unique
+  fullName: String
+  primaryNationality: String
+  gender: String
+  notes: String
+  type: String
+  mtpage: String
+  typeOfDeath: String
+  status: String
+  employedAs: String
+  organizations: String
+  jobs: String
+  coverages: String
+  mediums: String
+  country: Country! @relation(link: INLINE)
+  location: String
+  startDisplay: String
+  endDisplay: String
+  sourcesOfFire: String
+  motiveConfirmed: String
+  body: String  
+  year: String
+}
