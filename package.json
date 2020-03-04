@@ -19,6 +19,8 @@
     "@types/react": "^16.9.21",
     "@types/react-dom": "^16.9.5",
     "d3": "^5.15.0",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^1.7.0",
     "typescript": "^3.8.2"
   },
   "description": "Visualizing data scraped from the Committee to Protect Journalists' website.",

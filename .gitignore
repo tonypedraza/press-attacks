@@ -2,6 +2,9 @@
 
 .next
 
+# env variables
+*.env
+
 # dependencies
 /node_modules
 
