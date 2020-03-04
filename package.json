@@ -1,9 +1,9 @@
 {
-  "name": "product",
+  "name": "press-attacks",
   "version": "1.0.0",
   "private": true,
-  "repository": "https://github.com/nice-boys/product-boilerplate",
-  "author": "Max Stoiber <contact@mxstbr.com>",
+  "repository": "https://github.com/lspdrz/press-attacks",
+  "author": "Luis Pedraza <luis@lspdrz.com>",
   "workspaces": {
     "packages": [
       "web"
