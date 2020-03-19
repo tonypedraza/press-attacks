@@ -8,14 +8,14 @@ type User {
 
 type Country {
   id: ID! @id
-  name: String!
+  name: String! @unique
   journalistsKilled: [Journalist!]!
 }
 
 type Journalist {
   id: ID! @id
   href: String
-  cpjId: Int @unique
+  cpjId: String! @unique
   fullName: String
   primaryNationality: String
   gender: String

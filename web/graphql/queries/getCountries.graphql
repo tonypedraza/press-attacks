@@ -1,0 +1,8 @@
+#import "../fragments/userInfo"
+
+query getCountries {
+  countries {
+    id
+    name
+  }
+}

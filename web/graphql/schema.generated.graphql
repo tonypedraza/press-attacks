@@ -2,8 +2,1114 @@
 ### Do not make changes to this file directly
 
 
+type AggregateCountry {
+  count: Int!
+}
+
+type AggregateJournalist {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+"""Country in which Journalists were Killed"""
+type Country {
+  id: ID!
+  journalistsKilled: [Journalist!]
+  name: String!
+}
+
+type CountryConnection {
+  aggregate: AggregateCountry!
+  edges: [CountryEdge!]!
+  pageInfo: PageInfo!
+}
+
+input CountryCreateInput {
+  id: ID
+  journalistsKilled: JournalistCreateManyWithoutCountryInput
+  name: String!
+}
+
+input CountryCreateOneWithoutJournalistsKilledInput {
+  connect: CountryWhereUniqueInput
+  create: CountryCreateWithoutJournalistsKilledInput
+}
+
+input CountryCreateWithoutJournalistsKilledInput {
+  id: ID
+  name: String!
+}
+
+type CountryEdge {
+  cursor: String!
+  node: Country!
+}
+
+enum CountryOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+input CountryUpdateInput {
+  journalistsKilled: JournalistUpdateManyWithoutCountryInput
+  name: String
+}
+
+input CountryUpdateManyMutationInput {
+  name: String
+}
+
+input CountryUpdateOneRequiredWithoutJournalistsKilledInput {
+  connect: CountryWhereUniqueInput
+  create: CountryCreateWithoutJournalistsKilledInput
+  update: CountryUpdateWithoutJournalistsKilledDataInput
+  upsert: CountryUpsertWithoutJournalistsKilledInput
+}
+
+input CountryUpdateWithoutJournalistsKilledDataInput {
+  name: String
+}
+
+input CountryUpsertWithoutJournalistsKilledInput {
+  create: CountryCreateWithoutJournalistsKilledInput!
+  update: CountryUpdateWithoutJournalistsKilledDataInput!
+}
+
+input CountryWhereInput {
+  AND: [CountryWhereInput!]
+  id: ID
+  id_contains: ID
+  id_ends_with: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_not: ID
+  id_not_contains: ID
+  id_not_ends_with: ID
+  id_not_in: [ID!]
+  id_not_starts_with: ID
+  id_starts_with: ID
+  journalistsKilled_every: JournalistWhereInput
+  journalistsKilled_none: JournalistWhereInput
+  journalistsKilled_some: JournalistWhereInput
+  name: String
+  name_contains: String
+  name_ends_with: String
+  name_gt: String
+  name_gte: String
+  name_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_not: String
+  name_not_contains: String
+  name_not_ends_with: String
+  name_not_in: [String!]
+  name_not_starts_with: String
+  name_starts_with: String
+  NOT: [CountryWhereInput!]
+  OR: [CountryWhereInput!]
+}
+
+input CountryWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type Journalist {
+  body: String
+  country: Country!
+  coverages: String
+  cpjId: String!
+  employedAs: String
+  endDisplay: String
+  fullName: String
+  gender: String
+  href: String
+  id: ID!
+  jobs: String
+  location: String
+  mediums: String
+  motiveConfirmed: String
+  mtpage: String
+  notes: String
+  organizations: String
+  primaryNationality: String
+  sourcesOfFire: String
+  startDisplay: String
+  status: String
+  type: String
+  typeOfDeath: String
+  year: String
+}
+
+type JournalistConnection {
+  aggregate: AggregateJournalist!
+  edges: [JournalistEdge!]!
+  pageInfo: PageInfo!
+}
+
+input JournalistCreateInput {
+  body: String
+  country: CountryCreateOneWithoutJournalistsKilledInput!
+  coverages: String
+  cpjId: String!
+  employedAs: String
+  endDisplay: String
+  fullName: String
+  gender: String
+  href: String
+  id: ID
+  jobs: String
+  location: String
+  mediums: String
+  motiveConfirmed: String
+  mtpage: String
+  notes: String
+  organizations: String
+  primaryNationality: String
+  sourcesOfFire: String
+  startDisplay: String
+  status: String
+  type: String
+  typeOfDeath: String
+  year: String
+}
+
+input JournalistCreateManyWithoutCountryInput {
+  connect: [JournalistWhereUniqueInput!]
+  create: [JournalistCreateWithoutCountryInput!]
+}
+
+input JournalistCreateWithoutCountryInput {
+  body: String
+  coverages: String
+  cpjId: String!
+  employedAs: String
+  endDisplay: String
+  fullName: String
+  gender: String
+  href: String
+  id: ID
+  jobs: String
+  location: String
+  mediums: String
+  motiveConfirmed: String
+  mtpage: String
+  notes: String
+  organizations: String
+  primaryNationality: String
+  sourcesOfFire: String
+  startDisplay: String
+  status: String
+  type: String
+  typeOfDeath: String
+  year: String
+}
+
+type JournalistEdge {
+  cursor: String!
+  node: Journalist!
+}
+
+enum JournalistOrderByInput {
+  body_ASC
+  body_DESC
+  coverages_ASC
+  coverages_DESC
+  cpjId_ASC
+  cpjId_DESC
+  createdAt_ASC
+  createdAt_DESC
+  employedAs_ASC
+  employedAs_DESC
+  endDisplay_ASC
+  endDisplay_DESC
+  fullName_ASC
+  fullName_DESC
+  gender_ASC
+  gender_DESC
+  href_ASC
+  href_DESC
+  id_ASC
+  id_DESC
+  jobs_ASC
+  jobs_DESC
+  location_ASC
+  location_DESC
+  mediums_ASC
+  mediums_DESC
+  motiveConfirmed_ASC
+  motiveConfirmed_DESC
+  mtpage_ASC
+  mtpage_DESC
+  notes_ASC
+  notes_DESC
+  organizations_ASC
+  organizations_DESC
+  primaryNationality_ASC
+  primaryNationality_DESC
+  sourcesOfFire_ASC
+  sourcesOfFire_DESC
+  startDisplay_ASC
+  startDisplay_DESC
+  status_ASC
+  status_DESC
+  type_ASC
+  type_DESC
+  typeOfDeath_ASC
+  typeOfDeath_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  year_ASC
+  year_DESC
+}
+
+input JournalistScalarWhereInput {
+  AND: [JournalistScalarWhereInput!]
+  body: String
+  body_contains: String
+  body_ends_with: String
+  body_gt: String
+  body_gte: String
+  body_in: [String!]
+  body_lt: String
+  body_lte: String
+  body_not: String
+  body_not_contains: String
+  body_not_ends_with: String
+  body_not_in: [String!]
+  body_not_starts_with: String
+  body_starts_with: String
+  coverages: String
+  coverages_contains: String
+  coverages_ends_with: String
+  coverages_gt: String
+  coverages_gte: String
+  coverages_in: [String!]
+  coverages_lt: String
+  coverages_lte: String
+  coverages_not: String
+  coverages_not_contains: String
+  coverages_not_ends_with: String
+  coverages_not_in: [String!]
+  coverages_not_starts_with: String
+  coverages_starts_with: String
+  cpjId: String
+  cpjId_contains: String
+  cpjId_ends_with: String
+  cpjId_gt: String
+  cpjId_gte: String
+  cpjId_in: [String!]
+  cpjId_lt: String
+  cpjId_lte: String
+  cpjId_not: String
+  cpjId_not_contains: String
+  cpjId_not_ends_with: String
+  cpjId_not_in: [String!]
+  cpjId_not_starts_with: String
+  cpjId_starts_with: String
+  employedAs: String
+  employedAs_contains: String
+  employedAs_ends_with: String
+  employedAs_gt: String
+  employedAs_gte: String
+  employedAs_in: [String!]
+  employedAs_lt: String
+  employedAs_lte: String
+  employedAs_not: String
+  employedAs_not_contains: String
+  employedAs_not_ends_with: String
+  employedAs_not_in: [String!]
+  employedAs_not_starts_with: String
+  employedAs_starts_with: String
+  endDisplay: String
+  endDisplay_contains: String
+  endDisplay_ends_with: String
+  endDisplay_gt: String
+  endDisplay_gte: String
+  endDisplay_in: [String!]
+  endDisplay_lt: String
+  endDisplay_lte: String
+  endDisplay_not: String
+  endDisplay_not_contains: String
+  endDisplay_not_ends_with: String
+  endDisplay_not_in: [String!]
+  endDisplay_not_starts_with: String
+  endDisplay_starts_with: String
+  fullName: String
+  fullName_contains: String
+  fullName_ends_with: String
+  fullName_gt: String
+  fullName_gte: String
+  fullName_in: [String!]
+  fullName_lt: String
+  fullName_lte: String
+  fullName_not: String
+  fullName_not_contains: String
+  fullName_not_ends_with: String
+  fullName_not_in: [String!]
+  fullName_not_starts_with: String
+  fullName_starts_with: String
+  gender: String
+  gender_contains: String
+  gender_ends_with: String
+  gender_gt: String
+  gender_gte: String
+  gender_in: [String!]
+  gender_lt: String
+  gender_lte: String
+  gender_not: String
+  gender_not_contains: String
+  gender_not_ends_with: String
+  gender_not_in: [String!]
+  gender_not_starts_with: String
+  gender_starts_with: String
+  href: String
+  href_contains: String
+  href_ends_with: String
+  href_gt: String
+  href_gte: String
+  href_in: [String!]
+  href_lt: String
+  href_lte: String
+  href_not: String
+  href_not_contains: String
+  href_not_ends_with: String
+  href_not_in: [String!]
+  href_not_starts_with: String
+  href_starts_with: String
+  id: ID
+  id_contains: ID
+  id_ends_with: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_not: ID
+  id_not_contains: ID
+  id_not_ends_with: ID
+  id_not_in: [ID!]
+  id_not_starts_with: ID
+  id_starts_with: ID
+  jobs: String
+  jobs_contains: String
+  jobs_ends_with: String
+  jobs_gt: String
+  jobs_gte: String
+  jobs_in: [String!]
+  jobs_lt: String
+  jobs_lte: String
+  jobs_not: String
+  jobs_not_contains: String
+  jobs_not_ends_with: String
+  jobs_not_in: [String!]
+  jobs_not_starts_with: String
+  jobs_starts_with: String
+  location: String
+  location_contains: String
+  location_ends_with: String
+  location_gt: String
+  location_gte: String
+  location_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_not: String
+  location_not_contains: String
+  location_not_ends_with: String
+  location_not_in: [String!]
+  location_not_starts_with: String
+  location_starts_with: String
+  mediums: String
+  mediums_contains: String
+  mediums_ends_with: String
+  mediums_gt: String
+  mediums_gte: String
+  mediums_in: [String!]
+  mediums_lt: String
+  mediums_lte: String
+  mediums_not: String
+  mediums_not_contains: String
+  mediums_not_ends_with: String
+  mediums_not_in: [String!]
+  mediums_not_starts_with: String
+  mediums_starts_with: String
+  motiveConfirmed: String
+  motiveConfirmed_contains: String
+  motiveConfirmed_ends_with: String
+  motiveConfirmed_gt: String
+  motiveConfirmed_gte: String
+  motiveConfirmed_in: [String!]
+  motiveConfirmed_lt: String
+  motiveConfirmed_lte: String
+  motiveConfirmed_not: String
+  motiveConfirmed_not_contains: String
+  motiveConfirmed_not_ends_with: String
+  motiveConfirmed_not_in: [String!]
+  motiveConfirmed_not_starts_with: String
+  motiveConfirmed_starts_with: String
+  mtpage: String
+  mtpage_contains: String
+  mtpage_ends_with: String
+  mtpage_gt: String
+  mtpage_gte: String
+  mtpage_in: [String!]
+  mtpage_lt: String
+  mtpage_lte: String
+  mtpage_not: String
+  mtpage_not_contains: String
+  mtpage_not_ends_with: String
+  mtpage_not_in: [String!]
+  mtpage_not_starts_with: String
+  mtpage_starts_with: String
+  NOT: [JournalistScalarWhereInput!]
+  notes: String
+  notes_contains: String
+  notes_ends_with: String
+  notes_gt: String
+  notes_gte: String
+  notes_in: [String!]
+  notes_lt: String
+  notes_lte: String
+  notes_not: String
+  notes_not_contains: String
+  notes_not_ends_with: String
+  notes_not_in: [String!]
+  notes_not_starts_with: String
+  notes_starts_with: String
+  OR: [JournalistScalarWhereInput!]
+  organizations: String
+  organizations_contains: String
+  organizations_ends_with: String
+  organizations_gt: String
+  organizations_gte: String
+  organizations_in: [String!]
+  organizations_lt: String
+  organizations_lte: String
+  organizations_not: String
+  organizations_not_contains: String
+  organizations_not_ends_with: String
+  organizations_not_in: [String!]
+  organizations_not_starts_with: String
+  organizations_starts_with: String
+  primaryNationality: String
+  primaryNationality_contains: String
+  primaryNationality_ends_with: String
+  primaryNationality_gt: String
+  primaryNationality_gte: String
+  primaryNationality_in: [String!]
+  primaryNationality_lt: String
+  primaryNationality_lte: String
+  primaryNationality_not: String
+  primaryNationality_not_contains: String
+  primaryNationality_not_ends_with: String
+  primaryNationality_not_in: [String!]
+  primaryNationality_not_starts_with: String
+  primaryNationality_starts_with: String
+  sourcesOfFire: String
+  sourcesOfFire_contains: String
+  sourcesOfFire_ends_with: String
+  sourcesOfFire_gt: String
+  sourcesOfFire_gte: String
+  sourcesOfFire_in: [String!]
+  sourcesOfFire_lt: String
+  sourcesOfFire_lte: String
+  sourcesOfFire_not: String
+  sourcesOfFire_not_contains: String
+  sourcesOfFire_not_ends_with: String
+  sourcesOfFire_not_in: [String!]
+  sourcesOfFire_not_starts_with: String
+  sourcesOfFire_starts_with: String
+  startDisplay: String
+  startDisplay_contains: String
+  startDisplay_ends_with: String
+  startDisplay_gt: String
+  startDisplay_gte: String
+  startDisplay_in: [String!]
+  startDisplay_lt: String
+  startDisplay_lte: String
+  startDisplay_not: String
+  startDisplay_not_contains: String
+  startDisplay_not_ends_with: String
+  startDisplay_not_in: [String!]
+  startDisplay_not_starts_with: String
+  startDisplay_starts_with: String
+  status: String
+  status_contains: String
+  status_ends_with: String
+  status_gt: String
+  status_gte: String
+  status_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_not: String
+  status_not_contains: String
+  status_not_ends_with: String
+  status_not_in: [String!]
+  status_not_starts_with: String
+  status_starts_with: String
+  type: String
+  type_contains: String
+  type_ends_with: String
+  type_gt: String
+  type_gte: String
+  type_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_not: String
+  type_not_contains: String
+  type_not_ends_with: String
+  type_not_in: [String!]
+  type_not_starts_with: String
+  type_starts_with: String
+  typeOfDeath: String
+  typeOfDeath_contains: String
+  typeOfDeath_ends_with: String
+  typeOfDeath_gt: String
+  typeOfDeath_gte: String
+  typeOfDeath_in: [String!]
+  typeOfDeath_lt: String
+  typeOfDeath_lte: String
+  typeOfDeath_not: String
+  typeOfDeath_not_contains: String
+  typeOfDeath_not_ends_with: String
+  typeOfDeath_not_in: [String!]
+  typeOfDeath_not_starts_with: String
+  typeOfDeath_starts_with: String
+  year: String
+  year_contains: String
+  year_ends_with: String
+  year_gt: String
+  year_gte: String
+  year_in: [String!]
+  year_lt: String
+  year_lte: String
+  year_not: String
+  year_not_contains: String
+  year_not_ends_with: String
+  year_not_in: [String!]
+  year_not_starts_with: String
+  year_starts_with: String
+}
+
+input JournalistUpdateInput {
+  body: String
+  country: CountryUpdateOneRequiredWithoutJournalistsKilledInput
+  coverages: String
+  cpjId: String
+  employedAs: String
+  endDisplay: String
+  fullName: String
+  gender: String
+  href: String
+  jobs: String
+  location: String
+  mediums: String
+  motiveConfirmed: String
+  mtpage: String
+  notes: String
+  organizations: String
+  primaryNationality: String
+  sourcesOfFire: String
+  startDisplay: String
+  status: String
+  type: String
+  typeOfDeath: String
+  year: String
+}
+
+input JournalistUpdateManyDataInput {
+  body: String
+  coverages: String
+  cpjId: String
+  employedAs: String
+  endDisplay: String
+  fullName: String
+  gender: String
+  href: String
+  jobs: String
+  location: String
+  mediums: String
+  motiveConfirmed: String
+  mtpage: String
+  notes: String
+  organizations: String
+  primaryNationality: String
+  sourcesOfFire: String
+  startDisplay: String
+  status: String
+  type: String
+  typeOfDeath: String
+  year: String
+}
+
+input JournalistUpdateManyMutationInput {
+  body: String
+  coverages: String
+  cpjId: String
+  employedAs: String
+  endDisplay: String
+  fullName: String
+  gender: String
+  href: String
+  jobs: String
+  location: String
+  mediums: String
+  motiveConfirmed: String
+  mtpage: String
+  notes: String
+  organizations: String
+  primaryNationality: String
+  sourcesOfFire: String
+  startDisplay: String
+  status: String
+  type: String
+  typeOfDeath: String
+  year: String
+}
+
+input JournalistUpdateManyWithoutCountryInput {
+  connect: [JournalistWhereUniqueInput!]
+  create: [JournalistCreateWithoutCountryInput!]
+  delete: [JournalistWhereUniqueInput!]
+  deleteMany: [JournalistScalarWhereInput!]
+  disconnect: [JournalistWhereUniqueInput!]
+  set: [JournalistWhereUniqueInput!]
+  update: [JournalistUpdateWithWhereUniqueWithoutCountryInput!]
+  updateMany: [JournalistUpdateManyWithWhereNestedInput!]
+  upsert: [JournalistUpsertWithWhereUniqueWithoutCountryInput!]
+}
+
+input JournalistUpdateManyWithWhereNestedInput {
+  data: JournalistUpdateManyDataInput!
+  where: JournalistScalarWhereInput!
+}
+
+input JournalistUpdateWithoutCountryDataInput {
+  body: String
+  coverages: String
+  cpjId: String
+  employedAs: String
+  endDisplay: String
+  fullName: String
+  gender: String
+  href: String
+  jobs: String
+  location: String
+  mediums: String
+  motiveConfirmed: String
+  mtpage: String
+  notes: String
+  organizations: String
+  primaryNationality: String
+  sourcesOfFire: String
+  startDisplay: String
+  status: String
+  type: String
+  typeOfDeath: String
+  year: String
+}
+
+input JournalistUpdateWithWhereUniqueWithoutCountryInput {
+  data: JournalistUpdateWithoutCountryDataInput!
+  where: JournalistWhereUniqueInput!
+}
+
+input JournalistUpsertWithWhereUniqueWithoutCountryInput {
+  create: JournalistCreateWithoutCountryInput!
+  update: JournalistUpdateWithoutCountryDataInput!
+  where: JournalistWhereUniqueInput!
+}
+
+input JournalistWhereInput {
+  AND: [JournalistWhereInput!]
+  body: String
+  body_contains: String
+  body_ends_with: String
+  body_gt: String
+  body_gte: String
+  body_in: [String!]
+  body_lt: String
+  body_lte: String
+  body_not: String
+  body_not_contains: String
+  body_not_ends_with: String
+  body_not_in: [String!]
+  body_not_starts_with: String
+  body_starts_with: String
+  country: CountryWhereInput
+  coverages: String
+  coverages_contains: String
+  coverages_ends_with: String
+  coverages_gt: String
+  coverages_gte: String
+  coverages_in: [String!]
+  coverages_lt: String
+  coverages_lte: String
+  coverages_not: String
+  coverages_not_contains: String
+  coverages_not_ends_with: String
+  coverages_not_in: [String!]
+  coverages_not_starts_with: String
+  coverages_starts_with: String
+  cpjId: String
+  cpjId_contains: String
+  cpjId_ends_with: String
+  cpjId_gt: String
+  cpjId_gte: String
+  cpjId_in: [String!]
+  cpjId_lt: String
+  cpjId_lte: String
+  cpjId_not: String
+  cpjId_not_contains: String
+  cpjId_not_ends_with: String
+  cpjId_not_in: [String!]
+  cpjId_not_starts_with: String
+  cpjId_starts_with: String
+  employedAs: String
+  employedAs_contains: String
+  employedAs_ends_with: String
+  employedAs_gt: String
+  employedAs_gte: String
+  employedAs_in: [String!]
+  employedAs_lt: String
+  employedAs_lte: String
+  employedAs_not: String
+  employedAs_not_contains: String
+  employedAs_not_ends_with: String
+  employedAs_not_in: [String!]
+  employedAs_not_starts_with: String
+  employedAs_starts_with: String
+  endDisplay: String
+  endDisplay_contains: String
+  endDisplay_ends_with: String
+  endDisplay_gt: String
+  endDisplay_gte: String
+  endDisplay_in: [String!]
+  endDisplay_lt: String
+  endDisplay_lte: String
+  endDisplay_not: String
+  endDisplay_not_contains: String
+  endDisplay_not_ends_with: String
+  endDisplay_not_in: [String!]
+  endDisplay_not_starts_with: String
+  endDisplay_starts_with: String
+  fullName: String
+  fullName_contains: String
+  fullName_ends_with: String
+  fullName_gt: String
+  fullName_gte: String
+  fullName_in: [String!]
+  fullName_lt: String
+  fullName_lte: String
+  fullName_not: String
+  fullName_not_contains: String
+  fullName_not_ends_with: String
+  fullName_not_in: [String!]
+  fullName_not_starts_with: String
+  fullName_starts_with: String
+  gender: String
+  gender_contains: String
+  gender_ends_with: String
+  gender_gt: String
+  gender_gte: String
+  gender_in: [String!]
+  gender_lt: String
+  gender_lte: String
+  gender_not: String
+  gender_not_contains: String
+  gender_not_ends_with: String
+  gender_not_in: [String!]
+  gender_not_starts_with: String
+  gender_starts_with: String
+  href: String
+  href_contains: String
+  href_ends_with: String
+  href_gt: String
+  href_gte: String
+  href_in: [String!]
+  href_lt: String
+  href_lte: String
+  href_not: String
+  href_not_contains: String
+  href_not_ends_with: String
+  href_not_in: [String!]
+  href_not_starts_with: String
+  href_starts_with: String
+  id: ID
+  id_contains: ID
+  id_ends_with: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_not: ID
+  id_not_contains: ID
+  id_not_ends_with: ID
+  id_not_in: [ID!]
+  id_not_starts_with: ID
+  id_starts_with: ID
+  jobs: String
+  jobs_contains: String
+  jobs_ends_with: String
+  jobs_gt: String
+  jobs_gte: String
+  jobs_in: [String!]
+  jobs_lt: String
+  jobs_lte: String
+  jobs_not: String
+  jobs_not_contains: String
+  jobs_not_ends_with: String
+  jobs_not_in: [String!]
+  jobs_not_starts_with: String
+  jobs_starts_with: String
+  location: String
+  location_contains: String
+  location_ends_with: String
+  location_gt: String
+  location_gte: String
+  location_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_not: String
+  location_not_contains: String
+  location_not_ends_with: String
+  location_not_in: [String!]
+  location_not_starts_with: String
+  location_starts_with: String
+  mediums: String
+  mediums_contains: String
+  mediums_ends_with: String
+  mediums_gt: String
+  mediums_gte: String
+  mediums_in: [String!]
+  mediums_lt: String
+  mediums_lte: String
+  mediums_not: String
+  mediums_not_contains: String
+  mediums_not_ends_with: String
+  mediums_not_in: [String!]
+  mediums_not_starts_with: String
+  mediums_starts_with: String
+  motiveConfirmed: String
+  motiveConfirmed_contains: String
+  motiveConfirmed_ends_with: String
+  motiveConfirmed_gt: String
+  motiveConfirmed_gte: String
+  motiveConfirmed_in: [String!]
+  motiveConfirmed_lt: String
+  motiveConfirmed_lte: String
+  motiveConfirmed_not: String
+  motiveConfirmed_not_contains: String
+  motiveConfirmed_not_ends_with: String
+  motiveConfirmed_not_in: [String!]
+  motiveConfirmed_not_starts_with: String
+  motiveConfirmed_starts_with: String
+  mtpage: String
+  mtpage_contains: String
+  mtpage_ends_with: String
+  mtpage_gt: String
+  mtpage_gte: String
+  mtpage_in: [String!]
+  mtpage_lt: String
+  mtpage_lte: String
+  mtpage_not: String
+  mtpage_not_contains: String
+  mtpage_not_ends_with: String
+  mtpage_not_in: [String!]
+  mtpage_not_starts_with: String
+  mtpage_starts_with: String
+  NOT: [JournalistWhereInput!]
+  notes: String
+  notes_contains: String
+  notes_ends_with: String
+  notes_gt: String
+  notes_gte: String
+  notes_in: [String!]
+  notes_lt: String
+  notes_lte: String
+  notes_not: String
+  notes_not_contains: String
+  notes_not_ends_with: String
+  notes_not_in: [String!]
+  notes_not_starts_with: String
+  notes_starts_with: String
+  OR: [JournalistWhereInput!]
+  organizations: String
+  organizations_contains: String
+  organizations_ends_with: String
+  organizations_gt: String
+  organizations_gte: String
+  organizations_in: [String!]
+  organizations_lt: String
+  organizations_lte: String
+  organizations_not: String
+  organizations_not_contains: String
+  organizations_not_ends_with: String
+  organizations_not_in: [String!]
+  organizations_not_starts_with: String
+  organizations_starts_with: String
+  primaryNationality: String
+  primaryNationality_contains: String
+  primaryNationality_ends_with: String
+  primaryNationality_gt: String
+  primaryNationality_gte: String
+  primaryNationality_in: [String!]
+  primaryNationality_lt: String
+  primaryNationality_lte: String
+  primaryNationality_not: String
+  primaryNationality_not_contains: String
+  primaryNationality_not_ends_with: String
+  primaryNationality_not_in: [String!]
+  primaryNationality_not_starts_with: String
+  primaryNationality_starts_with: String
+  sourcesOfFire: String
+  sourcesOfFire_contains: String
+  sourcesOfFire_ends_with: String
+  sourcesOfFire_gt: String
+  sourcesOfFire_gte: String
+  sourcesOfFire_in: [String!]
+  sourcesOfFire_lt: String
+  sourcesOfFire_lte: String
+  sourcesOfFire_not: String
+  sourcesOfFire_not_contains: String
+  sourcesOfFire_not_ends_with: String
+  sourcesOfFire_not_in: [String!]
+  sourcesOfFire_not_starts_with: String
+  sourcesOfFire_starts_with: String
+  startDisplay: String
+  startDisplay_contains: String
+  startDisplay_ends_with: String
+  startDisplay_gt: String
+  startDisplay_gte: String
+  startDisplay_in: [String!]
+  startDisplay_lt: String
+  startDisplay_lte: String
+  startDisplay_not: String
+  startDisplay_not_contains: String
+  startDisplay_not_ends_with: String
+  startDisplay_not_in: [String!]
+  startDisplay_not_starts_with: String
+  startDisplay_starts_with: String
+  status: String
+  status_contains: String
+  status_ends_with: String
+  status_gt: String
+  status_gte: String
+  status_in: [String!]
+  status_lt: String
+  status_lte: String
+  status_not: String
+  status_not_contains: String
+  status_not_ends_with: String
+  status_not_in: [String!]
+  status_not_starts_with: String
+  status_starts_with: String
+  type: String
+  type_contains: String
+  type_ends_with: String
+  type_gt: String
+  type_gte: String
+  type_in: [String!]
+  type_lt: String
+  type_lte: String
+  type_not: String
+  type_not_contains: String
+  type_not_ends_with: String
+  type_not_in: [String!]
+  type_not_starts_with: String
+  type_starts_with: String
+  typeOfDeath: String
+  typeOfDeath_contains: String
+  typeOfDeath_ends_with: String
+  typeOfDeath_gt: String
+  typeOfDeath_gte: String
+  typeOfDeath_in: [String!]
+  typeOfDeath_lt: String
+  typeOfDeath_lte: String
+  typeOfDeath_not: String
+  typeOfDeath_not_contains: String
+  typeOfDeath_not_ends_with: String
+  typeOfDeath_not_in: [String!]
+  typeOfDeath_not_starts_with: String
+  typeOfDeath_starts_with: String
+  year: String
+  year_contains: String
+  year_ends_with: String
+  year_gt: String
+  year_gte: String
+  year_in: [String!]
+  year_lt: String
+  year_lte: String
+  year_not: String
+  year_not_contains: String
+  year_not_ends_with: String
+  year_not_in: [String!]
+  year_not_starts_with: String
+  year_starts_with: String
+}
+
+input JournalistWhereUniqueInput {
+  cpjId: String
+  id: ID
+}
+
+scalar Long
+
+type Mutation {
+  createCountry(data: CountryCreateInput!): Country!
+  createJournalist(data: JournalistCreateInput!): Journalist!
+  createUser(data: UserCreateInput!): User!
+  deleteCountry(where: CountryWhereUniqueInput!): Country
+  deleteJournalist(where: JournalistWhereUniqueInput!): Journalist
+  deleteManyCountries(where: CountryWhereInput): BatchPayload!
+  deleteManyJournalists(where: JournalistWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteUser(where: UserWhereUniqueInput!): User
+  updateCountry(data: CountryUpdateInput!, where: CountryWhereUniqueInput!): Country
+  updateJournalist(data: JournalistUpdateInput!, where: JournalistWhereUniqueInput!): Journalist
+  updateManyCountries(data: CountryUpdateManyMutationInput!, where: CountryWhereInput): BatchPayload!
+  updateManyJournalists(data: JournalistUpdateManyMutationInput!, where: JournalistWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  upsertCountry(create: CountryCreateInput!, update: CountryUpdateInput!, where: CountryWhereUniqueInput!): Country!
+  upsertJournalist(create: JournalistCreateInput!, update: JournalistUpdateInput!, where: JournalistWhereUniqueInput!): Journalist!
+  upsertUser(create: UserCreateInput!, update: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+}
+
 type Query {
+  countries(after: String, before: String, first: Int, last: Int, orderBy: CountryOrderByInput, skip: Int, where: CountryWhereInput): [Country!]!
+  countriesConnection(after: String, before: String, first: Int, last: Int, orderBy: CountryOrderByInput, skip: Int, where: CountryWhereInput): CountryConnection!
+  country(where: CountryWhereUniqueInput!): Country
+  journalist(where: JournalistWhereUniqueInput!): Journalist
+  journalists(after: String, before: String, first: Int, last: Int, orderBy: JournalistOrderByInput, skip: Int, where: JournalistWhereInput): [Journalist!]!
+  journalistsConnection(after: String, before: String, first: Int, last: Int, orderBy: JournalistOrderByInput, skip: Int, where: JournalistWhereInput): JournalistConnection!
   user(where: UserWhereUniqueInput!): User
+  users(after: String, before: String, first: Int, last: Int, orderBy: UserOrderByInput, skip: Int, where: UserWhereInput): [User!]!
+  usersConnection(after: String, before: String, first: Int, last: Int, orderBy: UserOrderByInput, skip: Int, where: UserWhereInput): UserConnection!
   viewer: User
 }
 
@@ -11,6 +1117,132 @@ type User {
   avatarUrl: String
   id: ID!
   name: String!
+}
+
+type UserConnection {
+  aggregate: AggregateUser!
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+
+input UserCreateInput {
+  avatarUrl: String
+  email: String
+  googleId: ID!
+  id: ID
+  name: String!
+}
+
+type UserEdge {
+  cursor: String!
+  node: User!
+}
+
+enum UserOrderByInput {
+  avatarUrl_ASC
+  avatarUrl_DESC
+  createdAt_ASC
+  createdAt_DESC
+  email_ASC
+  email_DESC
+  googleId_ASC
+  googleId_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+input UserUpdateInput {
+  avatarUrl: String
+  email: String
+  googleId: ID
+  name: String
+}
+
+input UserUpdateManyMutationInput {
+  avatarUrl: String
+  email: String
+  googleId: ID
+  name: String
+}
+
+input UserWhereInput {
+  AND: [UserWhereInput!]
+  avatarUrl: String
+  avatarUrl_contains: String
+  avatarUrl_ends_with: String
+  avatarUrl_gt: String
+  avatarUrl_gte: String
+  avatarUrl_in: [String!]
+  avatarUrl_lt: String
+  avatarUrl_lte: String
+  avatarUrl_not: String
+  avatarUrl_not_contains: String
+  avatarUrl_not_ends_with: String
+  avatarUrl_not_in: [String!]
+  avatarUrl_not_starts_with: String
+  avatarUrl_starts_with: String
+  email: String
+  email_contains: String
+  email_ends_with: String
+  email_gt: String
+  email_gte: String
+  email_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_not: String
+  email_not_contains: String
+  email_not_ends_with: String
+  email_not_in: [String!]
+  email_not_starts_with: String
+  email_starts_with: String
+  googleId: ID
+  googleId_contains: ID
+  googleId_ends_with: ID
+  googleId_gt: ID
+  googleId_gte: ID
+  googleId_in: [ID!]
+  googleId_lt: ID
+  googleId_lte: ID
+  googleId_not: ID
+  googleId_not_contains: ID
+  googleId_not_ends_with: ID
+  googleId_not_in: [ID!]
+  googleId_not_starts_with: ID
+  googleId_starts_with: ID
+  id: ID
+  id_contains: ID
+  id_ends_with: ID
+  id_gt: ID
+  id_gte: ID
+  id_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_not: ID
+  id_not_contains: ID
+  id_not_ends_with: ID
+  id_not_in: [ID!]
+  id_not_starts_with: ID
+  id_starts_with: ID
+  name: String
+  name_contains: String
+  name_ends_with: String
+  name_gt: String
+  name_gte: String
+  name_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_not: String
+  name_not_contains: String
+  name_not_ends_with: String
+  name_not_in: [String!]
+  name_not_starts_with: String
+  name_starts_with: String
+  NOT: [UserWhereInput!]
+  OR: [UserWhereInput!]
 }
 
 input UserWhereUniqueInput {

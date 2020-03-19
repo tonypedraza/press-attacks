@@ -11,14 +11,30 @@ const User = prismaObjectType({
   }
 });
 
+const Country = prismaObjectType({
+  name: "Country",
+  description: "Country in which Journalists were Killed",
+  definition(t) {
+    t.prismaFields([
+      "id",
+      "name",
+      {
+        name: "journalistsKilled",
+        args: []
+      }
+    ]);
+  }
+});
+
 const Query = prismaObjectType({
   name: "Query",
   definition(t) {
     t.prismaFields([
-      {
-        name: "user",
-        args: ["where"]
-      }
+      "*"
+      // {
+      //   name: "user",
+      //   args: ["where"]
+      // }
     ]);
     t.field("viewer", {
       type: "User",
@@ -27,6 +43,11 @@ const Query = prismaObjectType({
         ctx.viewerId ? ctx.prisma.user({ id: ctx.viewerId }) : null
     });
   }
+});
+
+const Mutation = prismaObjectType({
+  name: "Mutation",
+  definition: t => t.prismaFields(["*"])
 });
 
 const outputs = process.env.GENERATE
@@ -40,7 +61,7 @@ const outputs = process.env.GENERATE
     };
 
 const schema = makePrismaSchema({
-  types: [Query, User],
+  types: [Query, User, Country, Mutation],
   prisma: {
     datamodelInfo,
     client: prisma
