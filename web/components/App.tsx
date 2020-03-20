@@ -1,6 +1,7 @@
 import React, {
   useRef,
   FunctionComponent,
+  useCallback,
   useState,
   useEffect,
   useReducer
@@ -66,7 +67,7 @@ const App: FunctionComponent = () => {
   const [journalist, dispatchJournalist] = useReducer(journalistReducer, 0);
 
   /* Calculates the size of the d3 chart */
-  const handleResize = () => {
+  const handleResize = useCallback(() => {
     if (chart.current && info.current) {
       let chartRect = chart.current.getBoundingClientRect();
       let infoRect = info.current.getBoundingClientRect();
@@ -83,7 +84,7 @@ const App: FunctionComponent = () => {
       setGraphWidth(window.innerWidth - 25);
       setGraphHeight(300);
     }
-  };
+  }, [graphHeight, graphWidth]);
 
   /* When the component mounts, add a resize event listener 
   and call the handleResize function */
@@ -92,7 +93,7 @@ const App: FunctionComponent = () => {
     handleResize();
 
     return () => {
-      window.removeEventListener("resize", () => handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, [handleResize]);
 

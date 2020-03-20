@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useRef,
   FunctionComponent,
   useEffect,
+  useCallback,
   useContext,
   useMemo
 } from "react";
@@ -53,19 +55,22 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     }
   });
 
-  const handleChangeJournalist = (name: string) => {
-    dispatchJournalist({ type: "SELECT", name: name });
-    if (names.current) {
-      dispatchScrollTop({
-        type: "SELECTED_JOURNALIST",
-        scrollValue: names.current.scrollTop
-      });
-      dispatchScrollLeft({
-        type: "SELECTED_JOURNALIST",
-        scrollValue: names.current.scrollTop
-      });
-    }
-  };
+  const handleChangeJournalist = useCallback(
+    (name: string) => {
+      dispatchJournalist({ type: "SELECT", name: name });
+      if (names.current) {
+        dispatchScrollTop({
+          type: "SELECTED_JOURNALIST",
+          scrollValue: names.current.scrollTop
+        });
+        dispatchScrollLeft({
+          type: "SELECTED_JOURNALIST",
+          scrollValue: names.current.scrollTop
+        });
+      }
+    },
+    [dispatchJournalist, dispatchScrollLeft, dispatchScrollTop]
+  );
 
   const { pressAttacksYearSorted, country } = props;
 

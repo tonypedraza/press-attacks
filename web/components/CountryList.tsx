@@ -1,15 +1,16 @@
 import React, { FunctionComponent } from "react";
 import { GetCountriesComponent } from "../graphql/queries/getCountries.generated";
+import * as GraphQLTypes from "../graphql/schema-types.generated";
 
 interface CountryListProps {
   country: string;
   onHandleShowCountry: Function;
 }
-interface Country {
-  id: string;
-  name: string;
-  __typename: string;
-}
+
+type Country = { __typename?: "Country" } & Pick<
+  GraphQLTypes.Country,
+  "id" | "name"
+>;
 /*
 This is the CountryList component that shows the country buttons on the
 left side of the application
