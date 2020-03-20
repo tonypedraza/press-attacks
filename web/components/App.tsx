@@ -15,7 +15,6 @@ import JournalistNames from "./journalistspanel/JournalistNames";
 // Data used throughout the application
 import locationfrequencydata from "../data/location_frequency.json";
 import pressattacksdata from "../data/press_attacks_data.json";
-import countriesdata from "../data/countries.json";
 import sortedyeardata from "../data/attacks_sorted_by_year.json";
 
 /*
@@ -143,7 +142,6 @@ const App: FunctionComponent = () => {
             </header>
             <div className="container">
               <CountryList
-                countriesData={countriesdata}
                 country={country}
                 onHandleShowCountry={handleShowCountry}
               />

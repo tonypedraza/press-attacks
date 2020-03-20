@@ -1,7 +1,7 @@
 #import "../fragments/userInfo"
 
 query getCountries {
-  countries {
+  countries(orderBy: name_ASC) {
     id
     name
   }
