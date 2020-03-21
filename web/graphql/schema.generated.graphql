@@ -130,13 +130,15 @@ input CountryWhereUniqueInput {
   name: String
 }
 
+scalar DateTime
+
 type Journalist {
   body: String
   country: Country!
   coverages: String
   cpjId: String!
   employedAs: String
-  endDisplay: String
+  endDate: DateTime
   fullName: String
   gender: String
   href: String
@@ -150,11 +152,11 @@ type Journalist {
   organizations: String
   primaryNationality: String
   sourcesOfFire: String
-  startDisplay: String
+  startDate: DateTime
   status: String
   type: String
   typeOfDeath: String
-  year: String
+  year: DateTime
 }
 
 type JournalistConnection {
@@ -169,7 +171,7 @@ input JournalistCreateInput {
   coverages: String
   cpjId: String!
   employedAs: String
-  endDisplay: String
+  endDate: DateTime
   fullName: String
   gender: String
   href: String
@@ -183,11 +185,11 @@ input JournalistCreateInput {
   organizations: String
   primaryNationality: String
   sourcesOfFire: String
-  startDisplay: String
+  startDate: DateTime
   status: String
   type: String
   typeOfDeath: String
-  year: String
+  year: DateTime
 }
 
 input JournalistCreateManyWithoutCountryInput {
@@ -200,7 +202,7 @@ input JournalistCreateWithoutCountryInput {
   coverages: String
   cpjId: String!
   employedAs: String
-  endDisplay: String
+  endDate: DateTime
   fullName: String
   gender: String
   href: String
@@ -214,11 +216,11 @@ input JournalistCreateWithoutCountryInput {
   organizations: String
   primaryNationality: String
   sourcesOfFire: String
-  startDisplay: String
+  startDate: DateTime
   status: String
   type: String
   typeOfDeath: String
-  year: String
+  year: DateTime
 }
 
 type JournalistEdge {
@@ -237,8 +239,8 @@ enum JournalistOrderByInput {
   createdAt_DESC
   employedAs_ASC
   employedAs_DESC
-  endDisplay_ASC
-  endDisplay_DESC
+  endDate_ASC
+  endDate_DESC
   fullName_ASC
   fullName_DESC
   gender_ASC
@@ -265,8 +267,8 @@ enum JournalistOrderByInput {
   primaryNationality_DESC
   sourcesOfFire_ASC
   sourcesOfFire_DESC
-  startDisplay_ASC
-  startDisplay_DESC
+  startDate_ASC
+  startDate_DESC
   status_ASC
   status_DESC
   type_ASC
@@ -337,20 +339,14 @@ input JournalistScalarWhereInput {
   employedAs_not_in: [String!]
   employedAs_not_starts_with: String
   employedAs_starts_with: String
-  endDisplay: String
-  endDisplay_contains: String
-  endDisplay_ends_with: String
-  endDisplay_gt: String
-  endDisplay_gte: String
-  endDisplay_in: [String!]
-  endDisplay_lt: String
-  endDisplay_lte: String
-  endDisplay_not: String
-  endDisplay_not_contains: String
-  endDisplay_not_ends_with: String
-  endDisplay_not_in: [String!]
-  endDisplay_not_starts_with: String
-  endDisplay_starts_with: String
+  endDate: DateTime
+  endDate_gt: DateTime
+  endDate_gte: DateTime
+  endDate_in: [DateTime!]
+  endDate_lt: DateTime
+  endDate_lte: DateTime
+  endDate_not: DateTime
+  endDate_not_in: [DateTime!]
   fullName: String
   fullName_contains: String
   fullName_ends_with: String
@@ -535,20 +531,14 @@ input JournalistScalarWhereInput {
   sourcesOfFire_not_in: [String!]
   sourcesOfFire_not_starts_with: String
   sourcesOfFire_starts_with: String
-  startDisplay: String
-  startDisplay_contains: String
-  startDisplay_ends_with: String
-  startDisplay_gt: String
-  startDisplay_gte: String
-  startDisplay_in: [String!]
-  startDisplay_lt: String
-  startDisplay_lte: String
-  startDisplay_not: String
-  startDisplay_not_contains: String
-  startDisplay_not_ends_with: String
-  startDisplay_not_in: [String!]
-  startDisplay_not_starts_with: String
-  startDisplay_starts_with: String
+  startDate: DateTime
+  startDate_gt: DateTime
+  startDate_gte: DateTime
+  startDate_in: [DateTime!]
+  startDate_lt: DateTime
+  startDate_lte: DateTime
+  startDate_not: DateTime
+  startDate_not_in: [DateTime!]
   status: String
   status_contains: String
   status_ends_with: String
@@ -591,20 +581,14 @@ input JournalistScalarWhereInput {
   typeOfDeath_not_in: [String!]
   typeOfDeath_not_starts_with: String
   typeOfDeath_starts_with: String
-  year: String
-  year_contains: String
-  year_ends_with: String
-  year_gt: String
-  year_gte: String
-  year_in: [String!]
-  year_lt: String
-  year_lte: String
-  year_not: String
-  year_not_contains: String
-  year_not_ends_with: String
-  year_not_in: [String!]
-  year_not_starts_with: String
-  year_starts_with: String
+  year: DateTime
+  year_gt: DateTime
+  year_gte: DateTime
+  year_in: [DateTime!]
+  year_lt: DateTime
+  year_lte: DateTime
+  year_not: DateTime
+  year_not_in: [DateTime!]
 }
 
 input JournalistUpdateInput {
@@ -613,7 +597,7 @@ input JournalistUpdateInput {
   coverages: String
   cpjId: String
   employedAs: String
-  endDisplay: String
+  endDate: DateTime
   fullName: String
   gender: String
   href: String
@@ -626,11 +610,11 @@ input JournalistUpdateInput {
   organizations: String
   primaryNationality: String
   sourcesOfFire: String
-  startDisplay: String
+  startDate: DateTime
   status: String
   type: String
   typeOfDeath: String
-  year: String
+  year: DateTime
 }
 
 input JournalistUpdateManyDataInput {
@@ -638,7 +622,7 @@ input JournalistUpdateManyDataInput {
   coverages: String
   cpjId: String
   employedAs: String
-  endDisplay: String
+  endDate: DateTime
   fullName: String
   gender: String
   href: String
@@ -651,11 +635,11 @@ input JournalistUpdateManyDataInput {
   organizations: String
   primaryNationality: String
   sourcesOfFire: String
-  startDisplay: String
+  startDate: DateTime
   status: String
   type: String
   typeOfDeath: String
-  year: String
+  year: DateTime
 }
 
 input JournalistUpdateManyMutationInput {
@@ -663,7 +647,7 @@ input JournalistUpdateManyMutationInput {
   coverages: String
   cpjId: String
   employedAs: String
-  endDisplay: String
+  endDate: DateTime
   fullName: String
   gender: String
   href: String
@@ -676,11 +660,11 @@ input JournalistUpdateManyMutationInput {
   organizations: String
   primaryNationality: String
   sourcesOfFire: String
-  startDisplay: String
+  startDate: DateTime
   status: String
   type: String
   typeOfDeath: String
-  year: String
+  year: DateTime
 }
 
 input JournalistUpdateManyWithoutCountryInput {
@@ -705,7 +689,7 @@ input JournalistUpdateWithoutCountryDataInput {
   coverages: String
   cpjId: String
   employedAs: String
-  endDisplay: String
+  endDate: DateTime
   fullName: String
   gender: String
   href: String
@@ -718,11 +702,11 @@ input JournalistUpdateWithoutCountryDataInput {
   organizations: String
   primaryNationality: String
   sourcesOfFire: String
-  startDisplay: String
+  startDate: DateTime
   status: String
   type: String
   typeOfDeath: String
-  year: String
+  year: DateTime
 }
 
 input JournalistUpdateWithWhereUniqueWithoutCountryInput {
@@ -795,20 +779,14 @@ input JournalistWhereInput {
   employedAs_not_in: [String!]
   employedAs_not_starts_with: String
   employedAs_starts_with: String
-  endDisplay: String
-  endDisplay_contains: String
-  endDisplay_ends_with: String
-  endDisplay_gt: String
-  endDisplay_gte: String
-  endDisplay_in: [String!]
-  endDisplay_lt: String
-  endDisplay_lte: String
-  endDisplay_not: String
-  endDisplay_not_contains: String
-  endDisplay_not_ends_with: String
-  endDisplay_not_in: [String!]
-  endDisplay_not_starts_with: String
-  endDisplay_starts_with: String
+  endDate: DateTime
+  endDate_gt: DateTime
+  endDate_gte: DateTime
+  endDate_in: [DateTime!]
+  endDate_lt: DateTime
+  endDate_lte: DateTime
+  endDate_not: DateTime
+  endDate_not_in: [DateTime!]
   fullName: String
   fullName_contains: String
   fullName_ends_with: String
@@ -993,20 +971,14 @@ input JournalistWhereInput {
   sourcesOfFire_not_in: [String!]
   sourcesOfFire_not_starts_with: String
   sourcesOfFire_starts_with: String
-  startDisplay: String
-  startDisplay_contains: String
-  startDisplay_ends_with: String
-  startDisplay_gt: String
-  startDisplay_gte: String
-  startDisplay_in: [String!]
-  startDisplay_lt: String
-  startDisplay_lte: String
-  startDisplay_not: String
-  startDisplay_not_contains: String
-  startDisplay_not_ends_with: String
-  startDisplay_not_in: [String!]
-  startDisplay_not_starts_with: String
-  startDisplay_starts_with: String
+  startDate: DateTime
+  startDate_gt: DateTime
+  startDate_gte: DateTime
+  startDate_in: [DateTime!]
+  startDate_lt: DateTime
+  startDate_lte: DateTime
+  startDate_not: DateTime
+  startDate_not_in: [DateTime!]
   status: String
   status_contains: String
   status_ends_with: String
@@ -1049,20 +1021,14 @@ input JournalistWhereInput {
   typeOfDeath_not_in: [String!]
   typeOfDeath_not_starts_with: String
   typeOfDeath_starts_with: String
-  year: String
-  year_contains: String
-  year_ends_with: String
-  year_gt: String
-  year_gte: String
-  year_in: [String!]
-  year_lt: String
-  year_lte: String
-  year_not: String
-  year_not_contains: String
-  year_not_ends_with: String
-  year_not_in: [String!]
-  year_not_starts_with: String
-  year_starts_with: String
+  year: DateTime
+  year_gt: DateTime
+  year_gte: DateTime
+  year_in: [DateTime!]
+  year_lt: DateTime
+  year_lte: DateTime
+  year_not: DateTime
+  year_not_in: [DateTime!]
 }
 
 input JournalistWhereUniqueInput {

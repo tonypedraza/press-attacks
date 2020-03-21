@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { prisma } from "../../database/generated/client";
-import fetch from "isomorphic-unfetch";
 require("dotenv").config();
 
 const setOrCreateCountry = async (country: string) => {
@@ -17,6 +16,8 @@ const setOrCreateCountry = async (country: string) => {
 
 const addJournalist = async (datum: any) => {
   let journalistCountryId = await setOrCreateCountry(datum.country);
+  let startDate = new Date(datum.startDisplay).toISOString();
+  let endDate = new Date(datum.endDisplay).toISOString();
   let journalist = await prisma.createJournalist({
     href: datum.href,
     cpjId: `${datum.id}`,
@@ -39,8 +40,8 @@ const addJournalist = async (datum: any) => {
     coverages: datum.coverages,
     mediums: datum.mediums,
     location: datum.location,
-    startDisplay: datum.startDisplay,
-    endDisplay: datum.endDisplay,
+    startDate: startDate,
+    endDate: endDate,
     sourcesOfFire: datum.sourcesOfFire,
     motiveConfirmed: datum.motiveConfirmed,
     body: datum.body,
@@ -55,7 +56,7 @@ const scrapeData = async () => {
   const url = process.env.SCRAPE_URL;
   const rawData = await fetch(url as RequestInfo);
   const data = await rawData.json();
-  for await (let datum of data.splice(0, 4)) {
+  for await (let datum of data) {
     try {
       let journalist = await addJournalist(datum);
       console.log("added journalist");

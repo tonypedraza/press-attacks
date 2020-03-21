@@ -17,6 +17,7 @@ import JournalistNames from "./journalistspanel/JournalistNames";
 import locationfrequencydata from "../data/location_frequency.json";
 import pressattacksdata from "../data/press_attacks_data.json";
 import sortedyeardata from "../data/attacks_sorted_by_year.json";
+import { Country } from "../types/press-attacks";
 
 /*
 This is the main parent component of the entire Press Attacks app.
@@ -37,7 +38,7 @@ country in the chart and JournalistNames. Or removes the country if selected aga
 const App: FunctionComponent = () => {
   const chart = useRef<HTMLDivElement>(null);
   const info = useRef<HTMLDivElement>(null);
-  const [country, setCountry] = useState("");
+  const [country, setCountry] = useState({ id: "", name: "" });
   const [graphWidth, setGraphWidth] = useState(0);
   const [graphHeight, setGraphHeight] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,9 +102,9 @@ const App: FunctionComponent = () => {
   if the country is the same, reset country state to empty string
   else set country state to new country string
   */
-  const handleShowCountry = (newCountry: string) => {
-    if (newCountry === country) {
-      setCountry("");
+  const handleShowCountry = (newCountry: Country) => {
+    if (newCountry.name === country.name) {
+      setCountry({ id: "", name: "" });
     } else {
       setCountry(newCountry);
     }
@@ -116,7 +117,7 @@ const App: FunctionComponent = () => {
   let pressAttacks = [];
   let numAttacks = 0;
   pressattacksdata.forEach(entry => {
-    if (entry.location === country) {
+    if (entry.location === country.name) {
       pressAttacks.push(entry);
       numAttacks += 1;
     }

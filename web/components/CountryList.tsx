@@ -1,16 +1,12 @@
 import React, { FunctionComponent } from "react";
 import { GetCountriesComponent } from "../graphql/queries/getCountries.generated";
-import * as GraphQLTypes from "../graphql/schema-types.generated";
+import { Country } from "../types/press-attacks";
 
 interface CountryListProps {
-  country: string;
+  country: Country;
   onHandleShowCountry: Function;
 }
 
-type Country = { __typename?: "Country" } & Pick<
-  GraphQLTypes.Country,
-  "id" | "name"
->;
 /*
 This is the CountryList component that shows the country buttons on the
 left side of the application
@@ -26,10 +22,12 @@ const CountryList: FunctionComponent<CountryListProps> = (
       <li key={idx}>
         <button
           className={
-            entry.name === country ? "location-selected" : "location-button"
+            entry.name === country.name
+              ? "location-selected"
+              : "location-button"
           }
           value={entry.name}
-          onClick={() => onHandleShowCountry(entry.name)}
+          onClick={() => onHandleShowCountry(entry)}
         >
           {entry.name}
         </button>

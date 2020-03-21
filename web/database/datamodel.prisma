@@ -31,10 +31,10 @@ type Journalist {
   mediums: String
   country: Country! @relation(link: INLINE)
   location: String
-  startDisplay: String
-  endDisplay: String
+  startDate: DateTime
+  endDate: DateTime
   sourcesOfFire: String
   motiveConfirmed: String
   body: String  
-  year: String
+  year: DateTime
 }

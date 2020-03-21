@@ -1,0 +1,11 @@
+query getJournalistsByCountry($country: CountryWhereInput) {
+  journalists(where: { country: $country }, orderBy: startDate_DESC) {
+    id
+    fullName
+    year
+    startDate
+    location
+    organizations
+    body
+  }
+}

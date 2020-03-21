@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from "react";
+import { Country } from "../../types/press-attacks";
 
 interface CountryInfoProps {
-  country: String;
+  country: Country;
   numAttacks: number;
 }
 
@@ -15,15 +16,17 @@ const CountryInfo: FunctionComponent<CountryInfoProps> = (
 ) => {
   const { country, numAttacks } = props;
 
-  country.charAt(0).toUpperCase();
+  let countryName = country.name;
+
+  countryName.charAt(0).toUpperCase();
 
   const pluralOrSingular = numAttacks > 1 ? "journalists" : "journalist";
 
   return (
     <div className="CountryInfo">
-      {country ? (
+      {countryName ? (
         <p className="info-text">
-          <span className="info-name">{country}</span>
+          <span className="info-name">{countryName}</span>
           has {numAttacks} {pluralOrSingular} killed since 1992.
         </p>
       ) : (

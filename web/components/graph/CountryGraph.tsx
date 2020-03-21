@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { FunctionComponent } from "react";
 import * as d3 from "d3";
 
 import XAxis from "./XAxis";
 import YAxis from "./YAxis";
 import Line from "./Line";
+import { Country } from "../../types/press-attacks";
 
 interface CountryGraphProps {
-  country: string;
+  country: Country;
   locationFrequencyData: any;
   graphWidth: number;
   graphHeight: number;
@@ -33,18 +35,18 @@ const CountryGraph: FunctionComponent<CountryGraphProps> = (
   // Also finds if maximum number of attacks in a year
   // exceeds five so we can re-render y-axis
   let locationFrequency: [number, number][] = [];
-  let maximum_attacks = 0;
+  let maximumAttacks = 0;
   locationFrequencyData.forEach((entry: any) => {
-    if (entry.location === country) {
+    if (entry.location === country.name) {
       locationFrequency.push(entry);
-      if (entry.Freq > maximum_attacks) {
-        maximum_attacks = entry.Freq;
+      if (entry.Freq > maximumAttacks) {
+        maximumAttacks = entry.Freq;
       }
     }
   });
 
   // Dynamic y-axis domain:
-  let yDomain = [0, Math.max(maximum_attacks, 5)];
+  let yDomain = [0, Math.max(maximumAttacks, 5)];
 
   let rectHeight = graphHeight - margin.top - margin.bottom;
   rectHeight = rectHeight < 0 ? 100 : rectHeight;
