@@ -1,34 +1,18 @@
 import React, { FunctionComponent } from "react";
-
-interface Journalist {
-  id: number;
-  location: string;
-  year: string;
-  name: string;
-  organization: string;
-  date: string;
-  killed: string;
-  typeofdeath: string;
-  specificlocation: string;
-  freelance: string;
-  description: string;
-}
+import { Journalist } from "../../types/press-attacks";
 
 interface JournalistPaneProps {
-  journalist: string;
-  journalistData: any[];
+  journalist: Journalist;
   onHandleClosePane: Function;
 }
 
 const JournalistPane: FunctionComponent<JournalistPaneProps> = (
   props: JournalistPaneProps
 ) => {
-  const { journalist, journalistData } = props;
-  const result: Journalist = journalistData.find(
-    entry => entry.name === journalist
-  );
+  const { journalist } = props;
+  const attackDate = new Date(Date.parse(journalist.startDate)).toDateString();
 
-  return result ? (
+  return (
     <div className="journalist-pane">
       <button
         className="close-pane-button"
@@ -36,19 +20,19 @@ const JournalistPane: FunctionComponent<JournalistPaneProps> = (
       >
         Back
       </button>
-      <p className="journalist-name">{result.name}</p>
-      <p className="journalist-date">{result.date}</p>
-      <p className="journalist-location">
-        {result.specificlocation}, {result.location}
-      </p>
-      <p className="journalist-organization">{result.organization}</p>
-      <p className="description">{result.description}</p>
+      <p className="journalist-name">{journalist.fullName}</p>
+      <p className="journalist-date">{attackDate}</p>
+      <p className="journalist-location">{journalist.location}</p>
+      <p className="journalist-organization">{journalist.organizations}</p>
+      <p
+        className="description"
+        dangerouslySetInnerHTML={{ __html: `${journalist.body}` }}
+      ></p>
       <style jsx>
         {`
           .journalist-pane {
             min-width: 100px;
             right: none;
-            text-align: justify;
             height: 100%;
             overflow: scroll;
           }
@@ -121,7 +105,7 @@ const JournalistPane: FunctionComponent<JournalistPaneProps> = (
         `}
       </style>
     </div>
-  ) : null;
+  );
 };
 
 export default JournalistPane;

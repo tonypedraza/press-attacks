@@ -10,7 +10,6 @@ import React, {
 } from "react";
 import { AppContext } from "../appContext";
 import JournalistPane from "./JournalistPane";
-import pressattacksdata from "../../data/press_attacks_data.json";
 import { Country, Journalist } from "../../types/press-attacks";
 import { GetJournalistsByCountryComponent } from "../../graphql/queries/getJournalistsByCountry.generated";
 interface JournalistNamesProps {
@@ -40,6 +39,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   const { scrollLeft, dispatchScrollLeft } = useContext(AppContext);
   const names = useRef<HTMLDivElement>(null);
   const journalistContainer = useRef<HTMLDivElement>(null);
+
   /* When the component updates, readjust the scroll to
   the previous names div position or set to 0 for the journalistContainer
   div */
@@ -52,9 +52,10 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
       journalistContainer.current.scrollLeft = 0;
     }
   });
+
   const handleChangeJournalist = useCallback(
-    (name: string) => {
-      dispatchJournalist({ type: "SELECT", name: name });
+    (journalist: Journalist) => {
+      dispatchJournalist({ type: "SELECT", journalist: journalist });
       if (names.current) {
         dispatchScrollTop({
           type: "SELECTED_JOURNALIST",
@@ -68,6 +69,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     },
     [dispatchJournalist, dispatchScrollLeft, dispatchScrollTop]
   );
+
   const { country } = props;
   const getJournalistButtonDivs = useCallback(
     (journalists: any) => {
@@ -98,7 +100,7 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
             className="name-button"
             key={idx}
             value={entry.fullName}
-            onClick={() => handleChangeJournalist(entry.fullName)}
+            onClick={() => handleChangeJournalist(entry)}
           >
             {entry.fullName}
           </button>
@@ -130,11 +132,10 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
       {({ data, loading, error }) => {
         if (data && data.journalists) {
           setJournalists(data.journalists);
-          return journalist !== "" ? (
+          return journalist.id !== "" ? (
             <div ref={journalistContainer} className="journalist-container">
               <JournalistPane
                 journalist={journalist}
-                journalistData={pressattacksdata}
                 onHandleClosePane={() =>
                   dispatchJournalist({ type: "DESELECT" })
                 }

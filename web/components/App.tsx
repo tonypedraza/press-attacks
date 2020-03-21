@@ -56,16 +56,18 @@ const App: FunctionComponent = () => {
   const journalistReducer = (_state: any, action: any) => {
     switch (action.type) {
       case "SELECT":
-        return action.name;
+        return action.journalist;
       case "DESELECT":
-        return "";
+        return { id: "" };
       default:
-        return "";
+        return { id: "" };
     }
   };
   const [scrollTop, dispatchScrollTop] = useReducer(scrollReducer, 0);
   const [scrollLeft, dispatchScrollLeft] = useReducer(scrollReducer, 0);
-  const [journalist, dispatchJournalist] = useReducer(journalistReducer, 0);
+  const [journalist, dispatchJournalist] = useReducer(journalistReducer, {
+    id: ""
+  });
 
   /* Calculates the size of the d3 chart */
   const handleResize = useCallback(() => {

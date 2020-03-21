@@ -1,11 +1,12 @@
 import { createContext } from "react";
+import { Journalist } from "../types/press-attacks";
 
 export interface AppContextInterface {
   scrollTop: number;
   dispatchScrollTop: Function;
   scrollLeft: number;
   dispatchScrollLeft: Function;
-  journalist: string;
+  journalist: Journalist;
   dispatchJournalist: Function;
 }
 export const AppContext = createContext<AppContextInterface>({
@@ -13,6 +14,8 @@ export const AppContext = createContext<AppContextInterface>({
   dispatchScrollTop: () => {},
   scrollLeft: 0,
   dispatchScrollLeft: () => {},
-  journalist: "",
+  journalist: {
+    id: ""
+  },
   dispatchJournalist: () => {}
 });
