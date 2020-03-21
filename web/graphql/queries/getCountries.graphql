@@ -4,5 +4,6 @@ query getCountries {
   countries(orderBy: name_ASC) {
     id
     name
+    numJournalists
   }
 }

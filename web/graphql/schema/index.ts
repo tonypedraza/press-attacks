@@ -13,7 +13,7 @@ const User = prismaObjectType({
 
 const Country = prismaObjectType({
   name: "Country",
-  description: "Country in which Journalists were Killed",
+  description: "Country in which Journalists were killed",
   definition(t) {
     t.prismaFields([
       "id",
@@ -23,6 +23,15 @@ const Country = prismaObjectType({
         args: []
       }
     ]);
+    t.int("numJournalists", {
+      description: "Number of journalists killed in this country",
+      resolve: async ({ id }, {}, { prisma }) => {
+        const journalists = await prisma.journalists({
+          where: { country: { id } }
+        });
+        return journalists.length;
+      }
+    });
   }
 });
 

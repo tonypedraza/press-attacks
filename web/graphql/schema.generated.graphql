@@ -18,11 +18,14 @@ type BatchPayload {
   count: Long!
 }
 
-"""Country in which Journalists were Killed"""
+"""Country in which Journalists were killed"""
 type Country {
   id: ID!
   journalistsKilled: [Journalist!]
   name: String!
+
+  """Number of journalists killed in this country"""
+  numJournalists: Int!
 }
 
 type CountryConnection {

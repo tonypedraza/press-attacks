@@ -13,7 +13,6 @@ import JournalistPane from "./JournalistPane";
 import { Country, Journalist } from "../../types/press-attacks";
 import { GetJournalistsByCountryComponent } from "../../graphql/queries/getJournalistsByCountry.generated";
 interface JournalistNamesProps {
-  pressAttacksYearSorted: any;
   country: Country;
 }
 /*

@@ -3,7 +3,6 @@ import { Country } from "../../types/press-attacks";
 
 interface CountryInfoProps {
   country: Country;
-  numAttacks: number;
 }
 
 /*
@@ -14,20 +13,21 @@ about the selected country above the D3 graph.
 const CountryInfo: FunctionComponent<CountryInfoProps> = (
   props: CountryInfoProps
 ) => {
-  const { country, numAttacks } = props;
+  const { country } = props;
 
   let countryName = country.name;
 
   countryName.charAt(0).toUpperCase();
 
-  const pluralOrSingular = numAttacks > 1 ? "journalists" : "journalist";
+  const pluralOrSingular =
+    country.numJournalists > 1 ? "journalists" : "journalist";
 
   return (
     <div className="CountryInfo">
       {countryName ? (
         <p className="info-text">
           <span className="info-name">{countryName}</span>
-          has {numAttacks} {pluralOrSingular} killed since 1992.
+          has {country.numJournalists} {pluralOrSingular} killed since 1992.
         </p>
       ) : (
         <p className="default-text">

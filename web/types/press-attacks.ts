@@ -2,7 +2,7 @@ import * as GraphQLTypes from "../graphql/schema-types.generated";
 
 export type Country = { __typename?: "Country" } & Pick<
   GraphQLTypes.Country,
-  "id" | "name"
+  "id" | "name" | "numJournalists"
 >;
 
 export type Journalist = { __typename?: "Journalist" | undefined } & Pick<

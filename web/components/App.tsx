@@ -15,8 +15,6 @@ import JournalistNames from "./journalistspanel/JournalistNames";
 
 // Data used throughout the application
 import locationfrequencydata from "../data/location_frequency.json";
-import pressattacksdata from "../data/press_attacks_data.json";
-import sortedyeardata from "../data/attacks_sorted_by_year.json";
 import { Country } from "../types/press-attacks";
 
 /*
@@ -38,7 +36,11 @@ country in the chart and JournalistNames. Or removes the country if selected aga
 const App: FunctionComponent = () => {
   const chart = useRef<HTMLDivElement>(null);
   const info = useRef<HTMLDivElement>(null);
-  const [country, setCountry] = useState({ id: "", name: "" });
+  const [country, setCountry] = useState({
+    id: "",
+    name: "",
+    numJournalists: 0
+  });
   const [graphWidth, setGraphWidth] = useState(0);
   const [graphHeight, setGraphHeight] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -106,7 +108,7 @@ const App: FunctionComponent = () => {
   */
   const handleShowCountry = (newCountry: Country) => {
     if (newCountry.name === country.name) {
-      setCountry({ id: "", name: "" });
+      setCountry({ id: "", name: "", numJournalists: 0 });
     } else {
       setCountry(newCountry);
     }
@@ -114,16 +116,6 @@ const App: FunctionComponent = () => {
     dispatchScrollLeft({ type: "SELECTED_COUNTRY" });
     dispatchJournalist({ type: "DESELECT" });
   };
-
-  // All of the attacks that happened in the country
-  let pressAttacks = [];
-  let numAttacks = 0;
-  pressattacksdata.forEach(entry => {
-    if (entry.location === country.name) {
-      pressAttacks.push(entry);
-      numAttacks += 1;
-    }
-  });
 
   return (
     <AppContext.Provider
@@ -151,7 +143,7 @@ const App: FunctionComponent = () => {
               />
               <div className="graph-info">
                 <div ref={info} className="info-container">
-                  <CountryInfo country={country} numAttacks={numAttacks} />
+                  <CountryInfo country={country} />
                 </div>
                 <div ref={chart} className="graph-container">
                   <CountryGraph
@@ -165,10 +157,7 @@ const App: FunctionComponent = () => {
             </div>
           </div>
           <div className="right-side">
-            <JournalistNames
-              pressAttacksYearSorted={sortedyeardata}
-              country={country}
-            />
+            <JournalistNames country={country} />
           </div>
           <style jsx global>{`
             html,
