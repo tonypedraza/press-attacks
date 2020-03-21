@@ -63,6 +63,7 @@
   },
   "devDependencies": {
     "@types/rebass": "^3.0.4",
+    "@types/styled-jsx": "^2.2.8",
     "dotenv-webpack": "^1.7.0"
   }
 }
