@@ -44,12 +44,32 @@
 import React from "react";
 import { NextPage } from "next";
 import App from "../components/App";
+import { GetCountriesComponent } from "../graphql/queries/getCountries.generated";
 
-const Home: NextPage<{ userAgent: string }> = () => <App />;
+const Home: NextPage = () => {
+  return (
+    <GetCountriesComponent>
+      {({ data, loading, error }) => {
+        if (data && data.countries) {
+          return <App countries={data.countries} />;
+        }
+        if (loading) return <p>Loading...</p>;
+        if (error) return <p>Error :(</p>;
+        return null;
+      }}
+    </GetCountriesComponent>
+  );
+};
+
+export default Home;
+
+{
+  /* const Home: NextPage<{ userAgent: string }> = () => <App />;
 
 Home.getInitialProps = async ({ req }) => {
   const userAgent = req ? req.headers["user-agent"] || "" : navigator.userAgent;
   return { userAgent };
 };
 
-export default Home;
+export default Home; */
+}

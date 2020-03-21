@@ -34,7 +34,12 @@ size is changed
 country in the chart and JournalistNames. Or removes the country if selected again.
 */
 
-const App: FunctionComponent = () => {
+interface AppProps {
+  countries: Country[];
+}
+
+const App: FunctionComponent<AppProps> = (props: AppProps) => {
+  const { countries } = props;
   const chart = useRef<HTMLDivElement>(null);
   const info = useRef<HTMLDivElement>(null);
   const [country, setCountry] = useState({
@@ -140,6 +145,7 @@ const App: FunctionComponent = () => {
             <div className="container">
               <CountryList
                 country={country}
+                countries={countries}
                 onHandleShowCountry={handleShowCountry}
               />
               <div className="graph-info">

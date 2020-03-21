@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
 import countryListStyles from "../styles/countryList";
-import { GetCountriesComponent } from "../graphql/queries/getCountries.generated";
 import { Country } from "../types/press-attacks";
 
 interface CountryListProps {
   country: Country;
+  countries: Country[];
   onHandleShowCountry: Function;
 }
 
@@ -16,7 +16,7 @@ left side of the application
 const CountryList: FunctionComponent<CountryListProps> = (
   props: CountryListProps
 ) => {
-  const { country, onHandleShowCountry } = props;
+  const { country, countries, onHandleShowCountry } = props;
 
   const getCountryButtons = (countries: Country[]) => {
     return countries.map((entry: Country, idx: number) => (
@@ -37,25 +37,12 @@ const CountryList: FunctionComponent<CountryListProps> = (
   };
 
   return (
-    <GetCountriesComponent>
-      {({ data, loading, error }) => {
-        if (data && data.countries) {
-          return (
-            <div className="country-list">
-              <ul className="country-list-links">
-                {getCountryButtons(data.countries)}
-              </ul>
-              <style jsx global>
-                {countryListStyles}
-              </style>
-            </div>
-          );
-        }
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error :(</p>;
-        return null;
-      }}
-    </GetCountriesComponent>
+    <div className="country-list">
+      <ul className="country-list-links">{getCountryButtons(countries)}</ul>
+      <style jsx global>
+        {countryListStyles}
+      </style>
+    </div>
   );
 };
 
