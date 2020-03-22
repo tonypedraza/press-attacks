@@ -14,12 +14,12 @@ export interface ApolloAppProps extends AppProps, AppInitialProps {
 
 export default (App: {
   new (): AppComponentType<ApolloAppProps>;
-  getInitialProps: Function;
+  getStaticProps: Function;
 }) => {
   return class Apollo extends React.Component<ApolloAppProps> {
     static displayName = "withApollo(App)";
     apolloClient: ApolloClient<NormalizedCacheObject>;
-    static async getInitialProps(ctx: AppContext) {
+    static async getStaticProps(ctx: AppContext) {
       const {
         Component,
         router,
@@ -27,8 +27,8 @@ export default (App: {
       } = ctx;
 
       let appProps = {};
-      if (App.getInitialProps) {
-        appProps = await App.getInitialProps(ctx);
+      if (App.getStaticProps) {
+        appProps = await App.getStaticProps(ctx);
       }
 
       // Run all GraphQL queries in the component tree

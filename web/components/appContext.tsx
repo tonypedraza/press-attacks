@@ -15,7 +15,13 @@ export const AppContext = createContext<AppContextInterface>({
   scrollLeft: 0,
   dispatchScrollLeft: () => {},
   journalist: {
-    id: ""
+    id: "",
+    body: "",
+    fullName: "",
+    year: "",
+    startDate: "",
+    location: "",
+    organizations: ""
   },
   dispatchJournalist: () => {}
 });
