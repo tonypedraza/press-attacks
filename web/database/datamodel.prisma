@@ -1,11 +1,3 @@
-type User {
-  id: ID! @id
-  name: String!
-  googleId: ID! @unique
-  email: String
-  avatarUrl: String
-}
-
 type Country {
   id: ID! @id
   name: String! @unique
