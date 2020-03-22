@@ -5,11 +5,11 @@ import * as d3 from "d3";
 import XAxis from "./XAxis";
 import YAxis from "./YAxis";
 import Line from "./Line";
-import { Country } from "../../types/press-attacks";
+import { Country, Journalist } from "../../types/press-attacks";
 
 interface CountryGraphProps {
   country: Country;
-  locationFrequencyData: any;
+  journalists: Journalist[];
   graphWidth: number;
   graphHeight: number;
 }
@@ -23,7 +23,7 @@ CountryInfo component
 const CountryGraph: FunctionComponent<CountryGraphProps> = (
   props: CountryGraphProps
 ) => {
-  const { locationFrequencyData, country, graphWidth, graphHeight } = props;
+  const { country, journalists, graphWidth, graphHeight } = props;
   const margin = {
     top: 20,
     right: 20,
@@ -31,17 +31,35 @@ const CountryGraph: FunctionComponent<CountryGraphProps> = (
     left: 50
   };
 
-  // Row that matches the country prop and contains year data
-  // Also finds if maximum number of attacks in a year
-  // exceeds five so we can re-render y-axis
-  let locationFrequency: [number, number][] = [];
-  let maximumAttacks = 0;
-  locationFrequencyData.forEach((entry: any) => {
-    if (entry.location === country.name) {
-      locationFrequency.push(entry);
-      if (entry.Freq > maximumAttacks) {
-        maximumAttacks = entry.Freq;
+  const reverseJournalists = journalists.slice(0).reverse();
+  let frequencies: any[] = [];
+  const fillYears = (l: number, h: number) => {
+    for (let idx = l + 1; idx < h; idx++) {
+      frequencies.push({ year: idx, Freq: 0 });
+    }
+  };
+  let year = 1992;
+  let count = 0;
+  reverseJournalists.forEach(entry => {
+    let journalistYear = Number.parseInt(entry.year.slice(0, 4));
+    if (year === journalistYear) count++;
+    else {
+      frequencies.push({ year: year, Freq: count });
+      if (journalistYear - year > 0) {
+        fillYears(year, journalistYear);
       }
+      count = 1;
+      year = journalistYear;
+    }
+  });
+  frequencies.push({ year: year, Freq: count }); //fence post case
+  const currentYear = new Date().getFullYear();
+  if (year < currentYear) fillYears(year, currentYear + 1); // filling in remaining years if any
+
+  let maximumAttacks = 0;
+  frequencies.forEach((entry: any) => {
+    if (entry.Freq > maximumAttacks) {
+      maximumAttacks = entry.Freq;
     }
   });
 
@@ -68,13 +86,15 @@ const CountryGraph: FunctionComponent<CountryGraphProps> = (
             margin={margin}
             yDomain={yDomain}
           />
-          <Line
-            width={graphWidth}
-            height={graphHeight}
-            margin={margin}
-            locationFrequency={locationFrequency}
-            yDomain={yDomain}
-          />
+          {country.id ? (
+            <Line
+              width={graphWidth}
+              height={graphHeight}
+              margin={margin}
+              locationFrequency={frequencies}
+              yDomain={yDomain}
+            />
+          ) : null}
         </g>
       </svg>
     </div>

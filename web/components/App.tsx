@@ -16,7 +16,6 @@ import CountryGraph from "./graph/CountryGraph";
 import JournalistNames from "./journalistspanel/JournalistNames";
 
 // Data used throughout the application
-import locationfrequencydata from "../data/location_frequency.json";
 import { Country } from "../types/press-attacks";
 import { GetJournalistsByCountryDocument } from "../graphql/queries/getJournalistsByCountry.generated";
 
@@ -168,7 +167,9 @@ const App: FunctionComponent<AppProps> = (props: AppProps) => {
                 <div ref={chart} className="graph-container">
                   <CountryGraph
                     country={country}
-                    locationFrequencyData={locationfrequencydata}
+                    journalists={
+                      data && data.journalists ? data.journalists : []
+                    }
                     graphWidth={graphWidth}
                     graphHeight={graphHeight}
                   />
@@ -177,7 +178,7 @@ const App: FunctionComponent<AppProps> = (props: AppProps) => {
             </div>
           </div>
           <div className="right-side">
-            {data && data.journalists ? (
+            {country.id && data && data.journalists ? (
               <JournalistNames journalists={data.journalists} />
             ) : null}
           </div>
