@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useReducer
 } from "react";
+import gql from "graphql-tag";
 import { useLazyQuery } from "@apollo/react-hooks";
 
 import { AppContext } from "./appContext";
@@ -17,7 +18,6 @@ import JournalistNames from "./journalistspanel/JournalistNames";
 
 // Data used throughout the application
 import { Country } from "../types/press-attacks";
-import { GetJournalistsByCountryDocument } from "../graphql/queries/getJournalistsByCountry.generated";
 
 /*
 This is the main parent component of the entire Press Attacks app.
@@ -45,7 +45,19 @@ const App: FunctionComponent<AppProps> = (props: AppProps) => {
   const info = useRef<HTMLDivElement>(null);
   // const [journalists, setJournalists] = useState([]);
   const [getJournalists, { data }] = useLazyQuery(
-    GetJournalistsByCountryDocument
+    gql`
+      query getJournalistsByCountry($country: CountryWhereInput) {
+        journalists(where: { country: $country }, orderBy: startDate_DESC) {
+          id
+          fullName
+          year
+          startDate
+          location
+          organizations
+          body
+        }
+      }
+    `
   );
   const [country, setCountry] = useState({
     id: "",
