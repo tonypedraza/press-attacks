@@ -1,6 +1,5 @@
 import { Express } from "express";
 import session from "cookie-session";
-import passport from "../auth/passport";
 
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
 
@@ -22,8 +21,6 @@ export default (app: Express) => {
       maxAge: TWENTY_FOUR_HOURS
     })
   );
-  app.use(passport.initialize());
-  app.use(passport.session());
   // Refresh session on every request
   app.use((req, _, next) => {
     if (req.session && req.user) {
