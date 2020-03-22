@@ -5,16 +5,15 @@ import React, {
   useEffect,
   useCallback,
   useContext,
-  useMemo,
-  useState
+  useMemo
 } from "react";
 import { AppContext } from "../appContext";
 import journalistNamesStyles from "../../styles/journalistNames";
 import JournalistPane from "./JournalistPane";
-import { Country, Journalist } from "../../types/press-attacks";
-import { GetJournalistsByCountryComponent } from "../../graphql/queries/getJournalistsByCountry.generated";
+import { Journalist } from "../../types/press-attacks";
+
 interface JournalistNamesProps {
-  country: Country;
+  journalists: Journalist[];
 }
 /*
 This is the JournalistNames component that displays the names
@@ -33,7 +32,7 @@ the divs used in the name-section.
 const JournalistNames: FunctionComponent<JournalistNamesProps> = (
   props: JournalistNamesProps
 ) => {
-  const [journalists, setJournalists] = useState([] as Journalist[]);
+  const { journalists } = props;
   const { journalist, dispatchJournalist } = useContext(AppContext);
   const { scrollTop, dispatchScrollTop } = useContext(AppContext);
   const { scrollLeft, dispatchScrollLeft } = useContext(AppContext);
@@ -70,7 +69,6 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     [dispatchJournalist, dispatchScrollLeft, dispatchScrollTop]
   );
 
-  const { country } = props;
   const getJournalistButtonDivs = useCallback(
     (journalists: any) => {
       if (journalists.length === 0) return null;
@@ -121,40 +119,20 @@ const JournalistNames: FunctionComponent<JournalistNamesProps> = (
     [getJournalistButtonDivs, journalists]
   );
 
-  return (
-    <GetJournalistsByCountryComponent
-      variables={{
-        country: {
-          id: country.id
-        }
-      }}
-    >
-      {({ data, loading, error }) => {
-        if (data && data.journalists) {
-          setJournalists(data.journalists);
-          return journalist.id !== "" ? (
-            <div ref={journalistContainer} className="journalist-container">
-              <JournalistPane
-                journalist={journalist}
-                onHandleClosePane={() =>
-                  dispatchJournalist({ type: "DESELECT" })
-                }
-              />
-            </div>
-          ) : (
-            <div ref={names} className="names">
-              {journalistButtonDivs}
-              <style jsx global>
-                {journalistNamesStyles}
-              </style>
-            </div>
-          );
-        }
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>Error :(</p>;
-        return null;
-      }}
-    </GetJournalistsByCountryComponent>
+  return journalist.id !== "" ? (
+    <div ref={journalistContainer} className="journalist-container">
+      <JournalistPane
+        journalist={journalist}
+        onHandleClosePane={() => dispatchJournalist({ type: "DESELECT" })}
+      />
+    </div>
+  ) : (
+    <div ref={names} className="names">
+      {journalistButtonDivs}
+      <style jsx global>
+        {journalistNamesStyles}
+      </style>
+    </div>
   );
 };
 export default JournalistNames;

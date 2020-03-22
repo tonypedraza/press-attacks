@@ -6,6 +6,7 @@ import React, {
   useEffect,
   useReducer
 } from "react";
+import { useLazyQuery } from "@apollo/react-hooks";
 
 import { AppContext } from "./appContext";
 import appStyles from "../styles/app";
@@ -17,6 +18,7 @@ import JournalistNames from "./journalistspanel/JournalistNames";
 // Data used throughout the application
 import locationfrequencydata from "../data/location_frequency.json";
 import { Country } from "../types/press-attacks";
+import { GetJournalistsByCountryDocument } from "../graphql/queries/getJournalistsByCountry.generated";
 
 /*
 This is the main parent component of the entire Press Attacks app.
@@ -42,6 +44,10 @@ const App: FunctionComponent<AppProps> = (props: AppProps) => {
   const { countries } = props;
   const chart = useRef<HTMLDivElement>(null);
   const info = useRef<HTMLDivElement>(null);
+  // const [journalists, setJournalists] = useState([]);
+  const [getJournalists, { data }] = useLazyQuery(
+    GetJournalistsByCountryDocument
+  );
   const [country, setCountry] = useState({
     id: "",
     name: "",
@@ -112,7 +118,7 @@ const App: FunctionComponent<AppProps> = (props: AppProps) => {
   if the country is the same, reset country state to empty string
   else set country state to new country string
   */
-  const handleShowCountry = (newCountry: Country) => {
+  const handleShowCountry = async (newCountry: Country) => {
     if (newCountry.name === country.name) {
       setCountry({ id: "", name: "", numJournalists: 0 });
     } else {
@@ -121,6 +127,13 @@ const App: FunctionComponent<AppProps> = (props: AppProps) => {
     dispatchScrollTop({ type: "SELECTED_COUNTRY" });
     dispatchScrollLeft({ type: "SELECTED_COUNTRY" });
     dispatchJournalist({ type: "DESELECT" });
+    getJournalists({
+      variables: {
+        country: {
+          id: newCountry.id
+        }
+      }
+    });
   };
 
   return (
@@ -164,7 +177,9 @@ const App: FunctionComponent<AppProps> = (props: AppProps) => {
             </div>
           </div>
           <div className="right-side">
-            <JournalistNames country={country} />
+            {data && data.journalists ? (
+              <JournalistNames journalists={data.journalists} />
+            ) : null}
           </div>
           <style jsx global>
             {appStyles}
